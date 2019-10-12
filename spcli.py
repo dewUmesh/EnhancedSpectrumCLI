@@ -13,8 +13,9 @@ class Utilities:
 
     def create_empty_file(self,fname):
         with open(fname,"w") as f:
-            f.write("")
+            f.write()
             f.close()
+        return fname
 
     def get_file_content(self,fname):
         """
@@ -57,9 +58,9 @@ class Utilities:
 
         outfile=fileName
         with open(outfile, "w") as f:
-            f.write(connection)
+            f.write(connection + '\n')
             for e in self.get_command_statements(command,arraylist):
-                f.write(e)
+                f.write(e + '\n')
             f.write("close")
             f.close()
         return outfile
@@ -76,14 +77,18 @@ class System:
 
     def execute_cli(self,cmdfile):
         p=list()
-        p = Popen([os.path.join(os.getcwd(),"cli.cmd")," --cmdfile {}".format("dataflowlist.out")], stdout=PIPE, stderr=PIPE)
+        # For Linux
+        #p = Popen([os.path.join(os.getcwd(),"cli.sh")," --cmdfile {}".format(cmdfile)], stdout=PIPE, stderr=PIPE)
+
+        #For Windows
+        p = Popen((os.path.join(os.getcwd(), "cli.cmd") + " --cmdfile {}".format(cmdfile)), stdout=PIPE, stderr=PIPE)
         output, err = p.communicate()
         exitcode=p.returncode
         print("-----------------------------------------")
-        #print(output)
-        #print(err.decode("utf-8"))
+        print(output.decode("utf-8"))
+        print(err.decode("utf-8"))
         t=list(err.decode("utf-8"))
-        print(t)
+        #print(t)
         #print("ERROR: {}".format(err.decode("utf-8")))
         print(" process exit code is : {}".format(exitcode))
         print("-----------------------------------------")
@@ -171,11 +176,11 @@ class ArgumentHandler:
 
 
 def main():
-    # cmd=Commands()
-    # c=Connection()
-    # c.set_portname("9090")
-    # print(c.get_connection_string())
-    # cmd.dataflow_list(c.get_connection_string())
+    cmd=CommandHandler()
+    c=Connection()
+    c.set_portname("9090")
+    print(c.get_connection_string())
+    cmd.dataflow_list(c.get_connection_string())
     # cmd.dataflow_export(c.get_connection_string(),"dataflowexport.txt")
     # cmd.dataflow_import(c.get_connection_string(), "dataflowexport.txt")
     parser = argparse.ArgumentParser()
