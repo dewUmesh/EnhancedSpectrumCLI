@@ -5,6 +5,7 @@ import socket
 from subprocess import PIPE,Popen
 import sys
 from os import path
+import platform
 
 class Utilities:
 
@@ -77,11 +78,11 @@ class System:
 
     def execute_cli(self,cmdfile):
         p=list()
-        # For Linux
-        #p = Popen([os.path.join(os.getcwd(),"cli.sh")," --cmdfile {}".format(cmdfile)], stdout=PIPE, stderr=PIPE)
+        if platform.system().__eq__("Windows"):
+            p = Popen((os.path.join(os.getcwd(), "cli.cmd") + " --cmdfile {}".format(cmdfile)), stdout=PIPE, stderr=PIPE)
+        else:
+            p = Popen([os.path.join(os.getcwd(), "cli.sh"), " --cmdfile {}".format(cmdfile)], stdout=PIPE, stderr=PIPE)
 
-        #For Windows
-        p = Popen((os.path.join(os.getcwd(), "cli.cmd") + " --cmdfile {}".format(cmdfile)), stdout=PIPE, stderr=PIPE)
         output, err = p.communicate()
         exitcode=p.returncode
         print("-----------------------------------------")
