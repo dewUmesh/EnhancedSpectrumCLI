@@ -1,0 +1,1080 @@
+<!--Exported Mon Feb 04 10:20:09 EST 2019 by admin from dev-vpbsapp02.bbtnet.com--><exportedDataflow schema_version="9.0"><exposed>false</exposed><dataflow id="um_redDot" schema_version="9.0" version=""><product_group/><channels><channel id="df0ad01f-99d9-4859-b125-75a2e1326e21"><field_transformers/></channel><channel id="4dc20a00-0e02-41e5-a776-ce0236aaeda3"><field_transformers/></channel><channel id="b3ccf3c8-7c99-44e8-a96a-fdeda89c9f5f"><field_transformers/></channel><channel id="f8274425-4816-44f2-855d-b1628d62250a"><field_transformers/></channel><channel id="9b4b8983-41d6-4642-af83-5bf834abfb49"><field_transformers/></channel><channel id="88f5eed7-3205-42d2-8271-9f8770011ee4"><field_transformers/></channel><channel id="2e982175-2cc3-4c46-8502-dac5f9528a1a"><field_transformers><field_transformer><name>converter</name><settings><![CDATA[<?xml version="1.0" encoding="utf-16"?>
+<ConverterFieldTransformerSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://transformer.g1.com/converter">
+  <fieldName xmlns="">CreditTotal</fieldName>
+  <fromType xmlns="">double</fromType>
+  <toType xmlns="">string</toType>
+</ConverterFieldTransformerSettings>]]></settings></field_transformer><field_transformer><name>converter</name><settings><![CDATA[<?xml version="1.0" encoding="utf-16"?>
+<ConverterFieldTransformerSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://transformer.g1.com/converter">
+  <fieldName xmlns="">RunningTotal</fieldName>
+  <fromType xmlns="">double</fromType>
+  <toType xmlns="">string</toType>
+</ConverterFieldTransformerSettings>]]></settings></field_transformer></field_transformers></channel><channel id="f04987ce-fafa-463d-bcfb-2bcbbf043745"><field_transformers/></channel><channel id="19acd7f9-aeec-4cff-b786-d86bec564378"><field_transformers/></channel><channel id="70f80984-ba2b-4935-a43d-81cdc68c5c77"><field_transformers/></channel><channel id="b9fdd239-a06a-43cf-8c06-d9fd6e49ec03"><field_transformers/></channel></channels><created_by>admin</created_by><created_date>8/29/18 4:12 PM</created_date><service_exposures/><icon/><inputs/><last_modified_by>admin</last_modified_by><last_modified_date>2/4/19 10:19 AM</last_modified_date><outputs/><properties><property><name>ViewData</name><value><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<viewData version="3.0">
+  <canvasNode id="d1a2a290-80a4-43eb-ba59-14524ebff4e4">
+    <location x="40.5" y="236" />
+  </canvasNode>
+  <canvasNode id="940105f6-f193-4d3c-b05e-0ce192902ef8">
+    <location x="-42" y="76" />
+  </canvasNode>
+  <canvasNode id="ef0a100b-6a2c-4cae-b864-15ffb85d31a0">
+    <location x="-64.5" y="205" />
+  </canvasNode>
+  <canvasNode id="70b283c5-f5e6-4357-afe5-656747094d45">
+    <location x="-218.5" y="208" />
+  </canvasNode>
+  <canvasNode id="a159aa5b-58be-460f-8387-1e0c8f415835">
+    <location x="-853" y="104" />
+  </canvasNode>
+  <canvasNode id="5880bf1e-a6e4-4c9f-b41a-1ac1bf4b868b">
+    <location x="-738" y="105" />
+  </canvasNode>
+  <canvasNode id="c81e6e2e-9bc7-4430-943b-5b1b750ee0a8">
+    <location x="-634" y="106" />
+  </canvasNode>
+  <canvasNode id="90c032a0-8cd6-4058-89c1-b0a50e9b4b9d">
+    <location x="-434" y="102" />
+  </canvasNode>
+  <canvasNode id="cea7edd3-a725-400f-8c5d-494e6ac18d0b">
+    <location x="-543" y="106" />
+  </canvasNode>
+  <canvasNode id="a02175a8-4ab2-4ee2-b19d-2c037718e85b">
+    <location x="-348.5" y="102" />
+  </canvasNode>
+  <canvasNode id="e36453ff-407b-40e4-bc36-1cb30cde2803">
+    <location x="-264.5" y="98" />
+  </canvasNode>
+  <canvasNode id="41ea1c97-71f7-4baa-a843-f35c9aef47d4">
+    <location x="-952" y="110" />
+  </canvasNode>
+  <canvasLink fromPortID="0d007929-73aa-4e6e-bb69-cf25d5534b86" toPortID="2e4dbb62-7592-4903-905d-b5e220ba59f3" />
+  <canvasLink fromPortID="64dfdbb6-4e98-4bc9-a246-e5eaa08009d2" toPortID="6618c742-3453-4067-bc89-8813689d3587" />
+  <canvasLink fromPortID="a0588c37-63d2-48cb-ac2a-05c9127fbd46" toPortID="efb7e503-ea74-48d4-8610-ae6890d63105" />
+  <canvasLink fromPortID="8fbccb8b-b891-4c10-9055-5bd7abf702ab" toPortID="7f2585b0-9f8c-4d9c-a1db-d2cf27acbf43" />
+  <canvasLink fromPortID="b3caf8f5-bd80-4098-8373-181a9374dded" toPortID="e0183d88-fb73-4f01-87fd-352b25f72f91" />
+  <canvasLink fromPortID="da901f2c-813b-4931-93a2-91718aa4532e" toPortID="5593977b-9245-4291-83d3-36dc59d23da4" />
+  <canvasLink fromPortID="ece683a3-8bea-446a-8ce1-00d5d4820c4b" toPortID="d3b7597e-6148-45ea-8951-f6ab058e2649" />
+  <canvasLink fromPortID="0c537932-e45c-432a-9ec7-71d189e2b236" toPortID="d17ec681-029c-4589-bdd5-4b6927bb2761" />
+  <canvasLink fromPortID="a0f7a96e-dced-4646-ac9b-8b0cb57cc02a" toPortID="b6ef327b-3ec4-4d70-8e59-3e6af8ffdef1" />
+  <canvasLink fromPortID="880a5bea-9bd6-49fb-a598-8ef3c730bd2a" toPortID="43b109be-467b-40cd-906a-c2838b034e2f" />
+  <canvasLink fromPortID="8bafbbe4-3dda-4f60-ba0d-df660e07b786" toPortID="dea3ea5d-7f66-49f1-b017-00c9af0442f9" />
+</viewData>]]></value></property></properties><stages><stage id="41ea1c97-71f7-4baa-a843-f35c9aef47d4"><stage_name>source</stage_name><stage_version/><label>Read from File - Copy</label><num_instances>1</num_instances><distributed>false</distributed><batch_size>10000</batch_size><settings><![CDATA[<?xml version="1.0" encoding="utf-16"?>
+<SourceSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="2.5">
+  <firstRecordNumber>1</firstRecordNumber>
+  <maxRows>0</maxRows>
+  <dataSourceMetadata>
+    <CSVMetadata>
+      <encoding>UTF-8</encoding>
+      <host />
+      <path>/data/spectrum/EDOSource/transaction/itemProcessing/input/oneRec_test_TRN_TREDDOT_CREDITS_FIRST_ORDER_HEADERR.dat</path>
+      <port>-1</port>
+      <protocol>esfile</protocol>
+      <delimiter>007C</delimiter>
+      <textQualifier />
+      <skipFirstRow>true</skipFirstRow>
+      <lineSeparator />
+      <strictlyEnforceColumnCount>true</strictlyEnforceColumnCount>
+      <fields>
+        <field>
+          <name>DLZ_EFF_DT</name>
+          <required>false</required>
+          <type>string</type>
+          <locale>
+            <country>US</country>
+            <language>en</language>
+            <variant />
+          </locale>
+        </field>
+        <field>
+          <name>DLZ_LST_UPD_TS</name>
+          <required>false</required>
+          <type>string</type>
+        </field>
+        <field>
+          <name>DLZ_DATA_EFF_DT</name>
+          <required>false</required>
+          <type>string</type>
+        </field>
+        <field>
+          <name>RDOT_ICSEQ12</name>
+          <required>false</required>
+          <type>string</type>
+        </field>
+        <field>
+          <name>RDOT_ICSEQ12_ORIG</name>
+          <required>false</required>
+          <type>string</type>
+        </field>
+        <field>
+          <name>RDOT_ICABA</name>
+          <required>false</required>
+          <type>string</type>
+        </field>
+        <field>
+          <name>RDOT_ICONUS</name>
+          <required>false</required>
+          <type>string</type>
+        </field>
+        <field>
+          <name>RDOT_ICPCTL</name>
+          <required>false</required>
+          <type>string</type>
+        </field>
+        <field>
+          <name>RDOT_ICAMT</name>
+          <required>false</required>
+          <type>double</type>
+        </field>
+        <field>
+          <name>RDOT_ICFLAG2</name>
+          <required>false</required>
+          <type>string</type>
+        </field>
+        <field>
+          <name>RDOT_BLKACT</name>
+          <required>false</required>
+          <type>string</type>
+        </field>
+        <field>
+          <name>RDOT_SRCCNTL</name>
+          <required>false</required>
+          <type>string</type>
+        </field>
+        <field>
+          <name>RDOT_ICDITYU</name>
+          <required>false</required>
+          <type>string</type>
+        </field>
+      </fields>
+    </CSVMetadata>
+  </dataSourceMetadata>
+  <trimColumns>
+    <trimColumn>
+      <name>DLZ_EFF_DT</name>
+      <trim>TRIM</trim>
+    </trimColumn>
+    <trimColumn>
+      <name>DLZ_LST_UPD_TS</name>
+      <trim>TRIM</trim>
+    </trimColumn>
+    <trimColumn>
+      <name>DLZ_DATA_EFF_DT</name>
+      <trim>TRIM</trim>
+    </trimColumn>
+    <trimColumn>
+      <name>RDOT_ICSEQ12</name>
+      <trim>TRIM</trim>
+    </trimColumn>
+    <trimColumn>
+      <name>RDOT_ICSEQ12_ORIG</name>
+      <trim>TRIM</trim>
+    </trimColumn>
+    <trimColumn>
+      <name>RDOT_ICABA</name>
+      <trim>TRIM</trim>
+    </trimColumn>
+    <trimColumn>
+      <name>RDOT_ICONUS</name>
+      <trim>TRIM</trim>
+    </trimColumn>
+    <trimColumn>
+      <name>RDOT_ICPCTL</name>
+      <trim>TRIM</trim>
+    </trimColumn>
+    <trimColumn>
+      <name>RDOT_ICAMT</name>
+      <trim>TRIM</trim>
+    </trimColumn>
+    <trimColumn>
+      <name>RDOT_ICFLAG2</name>
+      <trim>TRIM</trim>
+    </trimColumn>
+    <trimColumn>
+      <name>RDOT_BLKACT</name>
+      <trim>TRIM</trim>
+    </trimColumn>
+    <trimColumn>
+      <name>RDOT_SRCCNTL</name>
+      <trim>TRIM</trim>
+    </trimColumn>
+    <trimColumn>
+      <name>RDOT_ICDITYU</name>
+      <trim>TRIM</trim>
+    </trimColumn>
+  </trimColumns>
+  <sortColumns />
+</SourceSettings>]]></settings><input_ports/><options/><output_ports><output_port id="0d007929-73aa-4e6e-bb69-cf25d5534b86"><channel idref="b9fdd239-a06a-43cf-8c06-d9fd6e49ec03"/><label>output_port</label><port_name>output_port</port_name></output_port><output_port id="dbb39d9a-4eff-489b-a414-20649a6bf2a2"><label>error_port</label><port_name>error_port</port_name></output_port></output_ports><properties><property><name>ViewData</name><value><![CDATA[IsRemote=T]]></value></property><property><name>stageItemName</name><value><![CDATA[fileSource]]></value></property></properties></stage><stage id="a159aa5b-58be-460f-8387-1e0c8f415835"><stage_name>transformer</stage_name><stage_version/><label>TF_RunningTotal- Copy (2)</label><num_instances>1</num_instances><distributed>false</distributed><batch_size>10000</batch_size><settings><![CDATA[<?xml version="1.0" encoding="utf-16"?>
+<TransformerSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="3.0">
+  <transformDefinitions>
+    <transformDefinition>
+      <name>Custom</name>
+      <script>data['RDOT_ICAMT'] = data['RDOT_ICAMT'] /100</script>
+      <isListTransform>false</isListTransform>
+      <transformParameters>
+        <transformParameter>
+          <name>transformName</name>
+          <type>string</type>
+          <value>Temp_Amount</value>
+        </transformParameter>
+      </transformParameters>
+      <transformFields />
+    </transformDefinition>
+    <transformDefinition>
+      <name>Custom</name>
+      <script>// Running Total &amp; Credit Total for a sequence number
+import groovy.transform.Field
+
+@Field int CandidateGroupNumber = 0;
+@Field double RunningTotalNumber = 0;
+@Field boolean ChangeIndicator = false;
+
+
+if (data['RDOT_ICFLAG2']  =='C' &amp;&amp; ChangeIndicator ==  false) {
+CandidateGroupNumber = CandidateGroupNumber +1 
+CreditTotalNumber = data['RDOT_ICAMT']
+RunningTotalNumber = 0
+ChangeIndicator = true
+}
+else if (data['RDOT_ICFLAG2']  =='D')
+{
+CandidateGroupNumber = CandidateGroupNumber
+RunningTotalNumber = RunningTotalNumber + data['RDOT_ICAMT']
+ChangeIndicator = false 
+}
+else
+{
+CreditTotalNumber = CreditTotalNumber + data['RDOT_ICAMT']
+}
+
+
+data['CandidateGroup']  = CandidateGroupNumber
+data['RunningTotal'] = roundTo(RunningTotalNumber,2)
+data['CreditTotal'] = roundTo(CreditTotalNumber,2)
+
+</script>
+      <isListTransform>false</isListTransform>
+      <transformParameters>
+        <transformParameter>
+          <name>outputColumn</name>
+          <type>integer</type>
+          <value>CandidateGroup</value>
+        </transformParameter>
+        <transformParameter>
+          <name>outputColumn</name>
+          <type>double</type>
+          <value>RunningTotal</value>
+        </transformParameter>
+        <transformParameter>
+          <name>outputColumn</name>
+          <type>double</type>
+          <value>CreditTotal</value>
+        </transformParameter>
+        <transformParameter>
+          <name>transformName</name>
+          <type>string</type>
+          <value>RunningTotal</value>
+        </transformParameter>
+      </transformParameters>
+      <transformFields>
+        <transformField>
+          <name>CandidateGroup</name>
+          <type>integer</type>
+          <fieldType xsi:type="SimpleFieldTypeInternal">
+            <name>integer</name>
+          </fieldType>
+        </transformField>
+        <transformField>
+          <name>RunningTotal</name>
+          <type>double</type>
+          <fieldType xsi:type="SimpleFieldTypeInternal">
+            <name>double</name>
+          </fieldType>
+        </transformField>
+        <transformField>
+          <name>CreditTotal</name>
+          <type>double</type>
+          <fieldType xsi:type="SimpleFieldTypeInternal">
+            <name>double</name>
+          </fieldType>
+        </transformField>
+      </transformFields>
+    </transformDefinition>
+    <transformDefinition>
+      <name>Custom</name>
+      <script>// Credit Total should be greater than DebitRunning Total, set offset indicator.
+// This indicator is used for add transaction of offset scenario.
+
+
+data['OffSetIndicator'] = '0'
+</script>
+      <isListTransform>false</isListTransform>
+      <transformParameters>
+        <transformParameter>
+          <name>outputColumn</name>
+          <type>string</type>
+          <value>OffSetIndicator</value>
+        </transformParameter>
+        <transformParameter>
+          <name>transformName</name>
+          <type>string</type>
+          <value>OffSetIndicator</value>
+        </transformParameter>
+      </transformParameters>
+      <transformFields>
+        <transformField>
+          <name>OffSetIndicator</name>
+          <type>string</type>
+          <fieldType xsi:type="SimpleFieldTypeInternal">
+            <name>string</name>
+          </fieldType>
+        </transformField>
+      </transformFields>
+    </transformDefinition>
+  </transformDefinitions>
+</TransformerSettings>]]></settings><input_ports><input_port id="2e4dbb62-7592-4903-905d-b5e220ba59f3"><channel idref="b9fdd239-a06a-43cf-8c06-d9fd6e49ec03"/><label>input_port</label><port_name>input_port</port_name></input_port></input_ports><options/><output_ports><output_port id="64dfdbb6-4e98-4bc9-a246-e5eaa08009d2"><channel idref="2e982175-2cc3-4c46-8502-dac5f9528a1a"/><label>output_port</label><port_name>output_port</port_name></output_port></output_ports><properties><property><name>ViewData</name><value/></property><property><name>stageItemName</name><value><![CDATA[transformer]]></value></property></properties></stage><stage id="90c032a0-8cd6-4058-89c1-b0a50e9b4b9d"><stage_name>UniqueIDGenerator</stage_name><stage_version/><label>UID_UniqueId- Copy (2)</label><num_instances>1</num_instances><distributed>false</distributed><batch_size>10000</batch_size><settings><![CDATA[<?xml version="1.0" encoding="utf-16" standalone="yes"?><HashGenerationSettings xmlns="http://g1.com/cdq/schema/uniqueidgenerator-settings.xsd"><Rules><HashGenerationField value="UniqueRecordID" /><Rule><Algorithm value="SeqNum" /><Start value="1" /><Active value="Y" /></Rule></Rules></HashGenerationSettings>]]></settings><input_ports><input_port id="e0183d88-fb73-4f01-87fd-352b25f72f91"><channel idref="b3ccf3c8-7c99-44e8-a96a-fdeda89c9f5f"/><label>input_port</label><port_name>input_port</port_name></input_port></input_ports><options/><output_ports><output_port id="da901f2c-813b-4931-93a2-91718aa4532e"><channel idref="f8274425-4816-44f2-855d-b1628d62250a"/><label>output_port</label><port_name>output_port</port_name></output_port></output_ports><properties><property><name>ViewData</name><value/></property><property><name>stageItemName</name><value><![CDATA[UniqueIDGenerator]]></value></property></properties></stage><stage id="5880bf1e-a6e4-4c9f-b41a-1ac1bf4b868b"><stage_name>BestOfBreed</stage_name><stage_version/><label>Bob_HighestRunningTotal- Copy (2)</label><num_instances>1</num_instances><distributed>false</distributed><batch_size>10000</batch_size><settings><![CDATA[<?xml version="1.0" encoding="utf-16" standalone="yes"?><ConsolidationConfiguration xmlns="http://g1.com/cdq/schema/bestofbreed-settings.xsd"><ConsolidationSettings><ConsolidationType value="BestOfBreed" /><GroupID value="RDOT_ICSEQ12" sort="true" /><GroupActions /><Rules><Rule><If><Condition><OrExpression><SimpleExpression><TestField value="CreditTotal" numeric="No" /><Operator value="Greater" /><DataType value="Yes" /><Value value="RunningTotal" /></SimpleExpression></OrExpression><AndExpression><SimpleExpression><TestField value="RunningTotal" numeric="Yes" /><Operator value="Highest" /></SimpleExpression></AndExpression></Condition><Action><BuildFromDataType value="No" /><BuildFromField value="0" /><BuildToField value="OffSetIndicator" /><Accumulate value="No" /></Action></If></Rule></Rules></ConsolidationSettings><ConsolidationSettings><ConsolidationType value="Primary" /><GroupActions /><Rules><Rule><If><Condition><OrExpression><SimpleExpression><TestField value="RunningTotal" numeric="Yes" /><Operator value="Highest" /></SimpleExpression></OrExpression></Condition></If></Rule></Rules></ConsolidationSettings></ConsolidationConfiguration>]]></settings><input_ports><input_port id="6618c742-3453-4067-bc89-8813689d3587"><channel idref="2e982175-2cc3-4c46-8502-dac5f9528a1a"/><label>input_port</label><port_name>input_port</port_name></input_port></input_ports><options/><output_ports><output_port id="a0588c37-63d2-48cb-ac2a-05c9127fbd46"><channel idref="9b4b8983-41d6-4642-af83-5bf834abfb49"/><label>output_port</label><port_name>output_port</port_name></output_port></output_ports><properties><property><name>ViewData</name><value/></property><property><name>stageItemName</name><value><![CDATA[BestOfBreed]]></value></property></properties></stage><stage id="ef0a100b-6a2c-4cae-b864-15ffb85d31a0"><stage_name>fieldselectorstage</stage_name><stage_version/><label>Field Selector</label><num_instances>1</num_instances><distributed>false</distributed><batch_size>10000</batch_size><settings><![CDATA[<?xml version="1.0" encoding="utf-16"?>
+<fieldSelectorConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <fields>
+    <extendedHierarchicalField>
+      <name>IndexCreditRunningTotal</name>
+      <fieldType>
+        <name>double</name>
+      </fieldType>
+      <required>true</required>
+    </extendedHierarchicalField>
+    <extendedHierarchicalField>
+      <name>UniqueRecordID</name>
+      <fieldType>
+        <name>string</name>
+      </fieldType>
+      <required>true</required>
+    </extendedHierarchicalField>
+    <extendedHierarchicalField>
+      <name>Status</name>
+      <fieldType>
+        <name>string</name>
+      </fieldType>
+      <required>false</required>
+    </extendedHierarchicalField>
+    <extendedHierarchicalField>
+      <name>Status.Code</name>
+      <fieldType>
+        <name>string</name>
+      </fieldType>
+      <required>false</required>
+    </extendedHierarchicalField>
+    <extendedHierarchicalField>
+      <name>Status.Description</name>
+      <fieldType>
+        <name>string</name>
+      </fieldType>
+      <required>false</required>
+    </extendedHierarchicalField>
+    <extendedHierarchicalField>
+      <name>RunningTotal1</name>
+      <fieldType>
+        <name>double</name>
+      </fieldType>
+      <required>false</required>
+    </extendedHierarchicalField>
+    <extendedHierarchicalField>
+      <name>CreditTotal1</name>
+      <fieldType>
+        <name>double</name>
+      </fieldType>
+      <required>false</required>
+    </extendedHierarchicalField>
+    <extendedHierarchicalField>
+      <name>HubSearchKey_CR</name>
+      <fieldType>
+        <name>string</name>
+      </fieldType>
+      <required>false</required>
+    </extendedHierarchicalField>
+    <extendedHierarchicalField>
+      <name>HubSearchKey_Debit</name>
+      <fieldType>
+        <name>string</name>
+      </fieldType>
+      <required>false</required>
+    </extendedHierarchicalField>
+    <extendedHierarchicalField>
+      <name>LAST_6_TRREDOT_SEQUENCE</name>
+      <fieldType>
+        <name>string</name>
+      </fieldType>
+      <required>true</required>
+    </extendedHierarchicalField>
+    <extendedHierarchicalField>
+      <name>OffSetIndicator</name>
+      <fieldType>
+        <name>string</name>
+      </fieldType>
+      <required>false</required>
+    </extendedHierarchicalField>
+    <extendedHierarchicalField>
+      <name>CollectionRecordType</name>
+      <fieldType>
+        <name>string</name>
+      </fieldType>
+      <required>false</required>
+    </extendedHierarchicalField>
+    <extendedHierarchicalField>
+      <name>CandidateGroup</name>
+      <fieldType>
+        <name>integer</name>
+      </fieldType>
+      <required>false</required>
+    </extendedHierarchicalField>
+    <extendedHierarchicalField>
+      <name>RunningTotal</name>
+      <fieldType>
+        <name>string</name>
+      </fieldType>
+      <required>false</required>
+    </extendedHierarchicalField>
+    <extendedHierarchicalField>
+      <name>CreditTotal</name>
+      <fieldType>
+        <name>string</name>
+      </fieldType>
+      <required>false</required>
+    </extendedHierarchicalField>
+    <extendedHierarchicalField>
+      <name>DLZ_EFF_DT</name>
+      <fieldType>
+        <name>string</name>
+      </fieldType>
+      <required>false</required>
+    </extendedHierarchicalField>
+    <extendedHierarchicalField>
+      <name>DLZ_LST_UPD_TS</name>
+      <fieldType>
+        <name>string</name>
+      </fieldType>
+      <required>false</required>
+    </extendedHierarchicalField>
+    <extendedHierarchicalField>
+      <name>DLZ_DATA_EFF_DT</name>
+      <fieldType>
+        <name>string</name>
+      </fieldType>
+      <required>false</required>
+    </extendedHierarchicalField>
+    <extendedHierarchicalField>
+      <name>RDOT_ICSEQ12</name>
+      <fieldType>
+        <name>string</name>
+      </fieldType>
+      <required>true</required>
+    </extendedHierarchicalField>
+    <extendedHierarchicalField>
+      <name>RDOT_ICSEQ12_ORIG</name>
+      <fieldType>
+        <name>string</name>
+      </fieldType>
+      <required>true</required>
+    </extendedHierarchicalField>
+    <extendedHierarchicalField>
+      <name>RDOT_ICABA</name>
+      <fieldType>
+        <name>string</name>
+      </fieldType>
+      <required>true</required>
+    </extendedHierarchicalField>
+    <extendedHierarchicalField>
+      <name>RDOT_ICONUS</name>
+      <fieldType>
+        <name>string</name>
+      </fieldType>
+      <required>true</required>
+    </extendedHierarchicalField>
+    <extendedHierarchicalField>
+      <name>RDOT_ICPCTL</name>
+      <fieldType>
+        <name>string</name>
+      </fieldType>
+      <required>true</required>
+    </extendedHierarchicalField>
+    <extendedHierarchicalField>
+      <name>RDOT_ICAMT</name>
+      <fieldType>
+        <name>double</name>
+      </fieldType>
+      <required>true</required>
+    </extendedHierarchicalField>
+    <extendedHierarchicalField>
+      <name>RDOT_ICFLAG2</name>
+      <fieldType>
+        <name>string</name>
+      </fieldType>
+      <required>true</required>
+    </extendedHierarchicalField>
+    <extendedHierarchicalField>
+      <name>RDOT_BLKACT</name>
+      <fieldType>
+        <name>string</name>
+      </fieldType>
+      <required>true</required>
+    </extendedHierarchicalField>
+    <extendedHierarchicalField>
+      <name>RDOT_SRCCNTL</name>
+      <fieldType>
+        <name>string</name>
+      </fieldType>
+      <required>true</required>
+    </extendedHierarchicalField>
+    <extendedHierarchicalField>
+      <name>RDOT_ICDITYU</name>
+      <fieldType>
+        <name>string</name>
+      </fieldType>
+      <required>true</required>
+    </extendedHierarchicalField>
+  </fields>
+  <includeNewFieldsByDefault>true</includeNewFieldsByDefault>
+</fieldSelectorConfiguration>]]></settings><input_ports><input_port id="43b109be-467b-40cd-906a-c2838b034e2f"><channel idref="4dc20a00-0e02-41e5-a776-ce0236aaeda3"/><label>input_port</label><port_name>input_port</port_name></input_port></input_ports><options/><output_ports><output_port id="8bafbbe4-3dda-4f60-ba0d-df660e07b786"><channel idref="88f5eed7-3205-42d2-8271-9f8770011ee4"/><label>output_port</label><port_name>output_port</port_name></output_port></output_ports><properties><property><name>ViewData</name><value/></property><property><name>stageItemName</name><value><![CDATA[fieldselectorstage]]></value></property></properties></stage><stage id="d1a2a290-80a4-43eb-ba59-14524ebff4e4"><stage_name>dbsink</stage_name><stage_version/><label>Write to DB</label><num_instances>1</num_instances><distributed>false</distributed><batch_size>10000</batch_size><settings><![CDATA[<?xml version="1.0" encoding="utf-16"?>
+<SinkSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="2.5">
+  <monitorProgress>true</monitorProgress>
+  <outputMode>0</outputMode>
+  <truncateTable>false</truncateTable>
+  <dropTable>false</dropTable>
+  <batchCommitThreshold>1</batchCommitThreshold>
+  <commitBatchCount>1</commitBatchCount>
+  <progressThreshold>1000</progressThreshold>
+  <dataSourceMetadata>
+    <JdbcMetadataRef>
+      <dataSourceConnectionName>SPECTRUM_MSSQL</dataSourceConnectionName>
+      <databaseEntity>/dbo/TABLE/treddot</databaseEntity>
+      <databaseEntityType>0</databaseEntityType>
+      <whereClause />
+      <fields>
+        <jdbcField>
+          <name>IndexCreditRunningTotal</name>
+          <required>false</required>
+          <type>double</type>
+          <jdbcName>IndexCreditRunningTotal</jdbcName>
+          <width>53</width>
+          <primaryKey>false</primaryKey>
+          <supported>true</supported>
+        </jdbcField>
+        <jdbcField>
+          <name>UniqueRecordID</name>
+          <required>false</required>
+          <type>string</type>
+          <jdbcName>UniqueRecordID</jdbcName>
+          <width>51</width>
+          <primaryKey>false</primaryKey>
+          <supported>true</supported>
+        </jdbcField>
+        <jdbcField>
+          <name>LAST_6_TRREDOT_SEQUENCE</name>
+          <required>false</required>
+          <type>string</type>
+          <jdbcName>LAST_6_TRREDOT_SEQUENCE</jdbcName>
+          <width>51</width>
+          <primaryKey>false</primaryKey>
+          <supported>true</supported>
+        </jdbcField>
+        <jdbcField>
+          <name>RDOT_ICSEQ12</name>
+          <required>false</required>
+          <type>string</type>
+          <jdbcName>RDOT_ICSEQ12</jdbcName>
+          <width>51</width>
+          <primaryKey>false</primaryKey>
+          <supported>true</supported>
+        </jdbcField>
+        <jdbcField>
+          <name>RDOT_ICSEQ12_ORIG</name>
+          <required>false</required>
+          <type>string</type>
+          <jdbcName>RDOT_ICSEQ12_ORIG</jdbcName>
+          <width>51</width>
+          <primaryKey>false</primaryKey>
+          <supported>true</supported>
+        </jdbcField>
+        <jdbcField>
+          <name>RDOT_ICABA</name>
+          <required>false</required>
+          <type>string</type>
+          <jdbcName>RDOT_ICABA</jdbcName>
+          <width>51</width>
+          <primaryKey>false</primaryKey>
+          <supported>true</supported>
+        </jdbcField>
+        <jdbcField>
+          <name>RDOT_ICONUS</name>
+          <required>false</required>
+          <type>string</type>
+          <jdbcName>RDOT_ICONUS</jdbcName>
+          <width>51</width>
+          <primaryKey>false</primaryKey>
+          <supported>true</supported>
+        </jdbcField>
+        <jdbcField>
+          <name>RDOT_ICPCTL</name>
+          <required>false</required>
+          <type>string</type>
+          <jdbcName>RDOT_ICPCTL</jdbcName>
+          <width>51</width>
+          <primaryKey>false</primaryKey>
+          <supported>true</supported>
+        </jdbcField>
+        <jdbcField>
+          <name>RDOT_ICAMT</name>
+          <required>false</required>
+          <type>double</type>
+          <jdbcName>RDOT_ICAMT</jdbcName>
+          <width>53</width>
+          <primaryKey>false</primaryKey>
+          <supported>true</supported>
+        </jdbcField>
+        <jdbcField>
+          <name>RDOT_ICFLAG2</name>
+          <required>false</required>
+          <type>string</type>
+          <jdbcName>RDOT_ICFLAG2</jdbcName>
+          <width>51</width>
+          <primaryKey>false</primaryKey>
+          <supported>true</supported>
+        </jdbcField>
+        <jdbcField>
+          <name>RDOT_BLKACT</name>
+          <required>false</required>
+          <type>string</type>
+          <jdbcName>RDOT_BLKACT</jdbcName>
+          <width>51</width>
+          <primaryKey>false</primaryKey>
+          <supported>true</supported>
+        </jdbcField>
+        <jdbcField>
+          <name>RDOT_SRCCNTL</name>
+          <required>false</required>
+          <type>string</type>
+          <jdbcName>RDOT_SRCCNTL</jdbcName>
+          <width>51</width>
+          <primaryKey>false</primaryKey>
+          <supported>true</supported>
+        </jdbcField>
+        <jdbcField>
+          <name>RDOT_ICDITYU</name>
+          <required>false</required>
+          <type>string</type>
+          <jdbcName>RDOT_ICDITYU</jdbcName>
+          <width>51</width>
+          <primaryKey>false</primaryKey>
+          <supported>true</supported>
+        </jdbcField>
+      </fields>
+    </JdbcMetadataRef>
+  </dataSourceMetadata>
+  <sortColumns />
+  <enableMultiFile>false</enableMultiFile>
+</SinkSettings>]]></settings><input_ports><input_port id="dea3ea5d-7f66-49f1-b017-00c9af0442f9"><channel idref="88f5eed7-3205-42d2-8271-9f8770011ee4"/><label>input_port</label><port_name>input_port</port_name></input_port></input_ports><options/><output_ports><output_port id="da69c644-e868-4c15-a7a3-3f4a1b1863e3"><label>sink_error_port</label><port_name>sink_error_port</port_name></output_port></output_ports><properties><property><name>ViewData</name><value/></property><property><name>stageItemName</name><value><![CDATA[dbsink]]></value></property></properties></stage><stage id="70b283c5-f5e6-4357-afe5-656747094d45"><stage_name>multicaster</stage_name><stage_version/><label>Broadcaster 2</label><num_instances>1</num_instances><distributed>false</distributed><batch_size>10000</batch_size><input_ports><input_port id="d17ec681-029c-4589-bdd5-4b6927bb2761"><channel idref="19acd7f9-aeec-4cff-b786-d86bec564378"/><label>input_port</label><port_name>input_port</port_name></input_port></input_ports><options/><output_ports><output_port id="a0f7a96e-dced-4646-ac9b-8b0cb57cc02a"><channel idref="f04987ce-fafa-463d-bcfb-2bcbbf043745"/><label>port</label><port_name/></output_port><output_port id="880a5bea-9bd6-49fb-a598-8ef3c730bd2a"><channel idref="4dc20a00-0e02-41e5-a776-ce0236aaeda3"/><label>port 2</label><port_name/></output_port></output_ports><properties><property><name>ViewData</name><value/></property><property><name>stageItemName</name><value><![CDATA[multicaster]]></value></property></properties></stage><stage id="cea7edd3-a725-400f-8c5d-494e6ac18d0b"><stage_name>router</stage_name><stage_version/><label>Conditional Router- Copy (2)</label><num_instances>1</num_instances><distributed>false</distributed><batch_size>10000</batch_size><settings><![CDATA[<?xml version="1.0" encoding="utf-16"?>
+<RouterSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="2.5">
+  <outputCopy>false</outputCopy>
+  <singleOutput>false</singleOutput>
+  <portExpressions>
+    <portExpression>
+      <portId>b3caf8f5-bd80-4098-8373-181a9374dded</portId>
+      <expression>return isNotEqualTo(data.get('CollectionRecordType'), 'BestOfBreed') || isEqualTo(data.get('OffSetIndicator'), '1');
+      
+import static com.pb.spectrum.api.datetime.DateTimeUtil.*;
+
+def boolean isNotEqualTo(Object field, Object value)
+{
+  try
+  {
+    if(field instanceof BigDecimal)
+      return new BigDecimal(value) != field
+    if(field instanceof Boolean)
+      return Boolean.valueOf(value) != field
+    else if(field instanceof Integer)
+      return Integer.valueOf(value) != field
+    else if(field instanceof Long)
+      return Long.valueOf(value) != field
+    else if(field instanceof Float)
+      return Float.valueOf(value) != field
+    else if(field instanceof Double)
+      return Double.valueOf(value) != field
+    else if(field instanceof com.pb.spectrum.api.datetime.Date)
+      return compare(field, com.pb.spectrum.api.datetime.Date.valueOf(value)) != 0
+    else if(field instanceof com.pb.spectrum.api.datetime.Time)
+      return compare(field, com.pb.spectrum.api.datetime.Time.valueOf(value)) != 0
+    else if(field instanceof com.pb.spectrum.api.datetime.DateTime)
+      return compare(field, com.pb.spectrum.api.datetime.DateTime.valueOf(value)) != 0
+    return value != field;
+  }
+  catch (Exception)
+  {
+    return false;
+  }
+}
+    
+      
+import static com.pb.spectrum.api.datetime.DateTimeUtil.*;
+
+def boolean isEqualTo(Object field, Object value)
+{
+  try
+  {
+    if(field instanceof BigDecimal)
+      return new BigDecimal(value) == field
+    if(field instanceof Boolean)
+      return Boolean.valueOf(value) == field
+    else if(field instanceof Integer)
+      return Integer.valueOf(value) == field
+    else if(field instanceof Long)
+      return Long.valueOf(value) == field
+    else if(field instanceof Float)
+      return Float.valueOf(value) == field
+    else if(field instanceof Double)
+      return Double.valueOf(value) == field
+    else if(field instanceof com.pb.spectrum.api.datetime.Date)
+      return compare(field, com.pb.spectrum.api.datetime.Date.valueOf(value)) == 0
+    else if(field instanceof com.pb.spectrum.api.datetime.Time)
+      return compare(field, com.pb.spectrum.api.datetime.Time.valueOf(value)) == 0
+    else if(field instanceof com.pb.spectrum.api.datetime.DateTime)
+      return compare(field, com.pb.spectrum.api.datetime.DateTime.valueOf(value)) == 0
+    return value == field;   
+  }
+  catch (Exception)
+  {
+    return false;
+  }	
+}
+    </expression>
+      <ViewData>&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ExpressionBuilderInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;CombineMethod&gt;Any&lt;/CombineMethod&gt;
+  &lt;ExpressionDetailInfo&gt;
+    &lt;ExpressionDetails&gt;
+      &lt;ExpressionField&gt;CollectionRecordType&lt;/ExpressionField&gt;
+      &lt;ExpressionOperator&gt;is not equal to&lt;/ExpressionOperator&gt;
+      &lt;ExpressionValue&gt;BestOfBreed&lt;/ExpressionValue&gt;
+      &lt;comparisonType&gt;VALUE&lt;/comparisonType&gt;
+    &lt;/ExpressionDetails&gt;
+    &lt;ExpressionDetails&gt;
+      &lt;ExpressionField&gt;OffSetIndicator&lt;/ExpressionField&gt;
+      &lt;ExpressionOperator&gt;is equal to&lt;/ExpressionOperator&gt;
+      &lt;ExpressionValue&gt;1&lt;/ExpressionValue&gt;
+      &lt;comparisonType&gt;VALUE&lt;/comparisonType&gt;
+    &lt;/ExpressionDetails&gt;
+  &lt;/ExpressionDetailInfo&gt;
+&lt;/ExpressionBuilderInfo&gt;</ViewData>
+    </portExpression>
+  </portExpressions>
+</RouterSettings>]]></settings><input_ports><input_port id="7f2585b0-9f8c-4d9c-a1db-d2cf27acbf43"><channel idref="70f80984-ba2b-4935-a43d-81cdc68c5c77"/><label>input_port</label><port_name>input_port</port_name></input_port></input_ports><options/><output_ports><output_port id="b3caf8f5-bd80-4098-8373-181a9374dded"><channel idref="b3ccf3c8-7c99-44e8-a96a-fdeda89c9f5f"/><label>port</label><port_name/></output_port></output_ports><properties><property><name>ViewData</name><value/></property><property><name>stageItemName</name><value><![CDATA[router]]></value></property></properties></stage><stage id="940105f6-f193-4d3c-b05e-0ce192902ef8"><stage_name>indexsinkstage</stage_name><stage_version/><label>Write to Search Index - Copy - Copy</label><num_instances>1</num_instances><distributed>false</distributed><batch_size>10000</batch_size><settings><![CDATA[<?xml version="1.0" encoding="utf-16"?>
+<indexBuilderConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <indexName>SI_TREDOT</indexName>
+  <indexFields>
+    <indexFields>
+      <analyzed>false</analyzed>
+      <fieldanalyzer />
+      <indexFieldName>CreditTotal</indexFieldName>
+      <name>CreditTotal</name>
+      <stored>true</stored>
+      <type>string</type>
+    </indexFields>
+    <indexFields>
+      <analyzed>false</analyzed>
+      <fieldanalyzer />
+      <indexFieldName>HubSearchKey_CR</indexFieldName>
+      <name>HubSearchKey_CR</name>
+      <stored>true</stored>
+      <type>string</type>
+    </indexFields>
+    <indexFields>
+      <analyzed>false</analyzed>
+      <fieldanalyzer />
+      <indexFieldName>HubSearchKey_Debit</indexFieldName>
+      <name>HubSearchKey_Debit</name>
+      <stored>true</stored>
+      <type>string</type>
+    </indexFields>
+    <indexFields>
+      <analyzed>false</analyzed>
+      <fieldanalyzer />
+      <indexFieldName>RunningTotal</indexFieldName>
+      <name>RunningTotal</name>
+      <stored>true</stored>
+      <type>string</type>
+    </indexFields>
+    <indexFields>
+      <analyzed>true</analyzed>
+      <fieldanalyzer>Keyword</fieldanalyzer>
+      <indexFieldName>UniqueRecordID</indexFieldName>
+      <name>UniqueRecordID</name>
+      <stored>true</stored>
+      <type>string</type>
+    </indexFields>
+    <indexFields>
+      <analyzed>false</analyzed>
+      <fieldanalyzer />
+      <indexFieldName>RDOT_BLKACT</indexFieldName>
+      <name>RDOT_BLKACT</name>
+      <stored>true</stored>
+      <type>string</type>
+    </indexFields>
+    <indexFields>
+      <analyzed>false</analyzed>
+      <fieldanalyzer />
+      <indexFieldName>RDOT_ICABA</indexFieldName>
+      <name>RDOT_ICABA</name>
+      <stored>true</stored>
+      <type>string</type>
+    </indexFields>
+    <indexFields>
+      <analyzed>true</analyzed>
+      <fieldanalyzer>Standard</fieldanalyzer>
+      <indexFieldName>RDOT_ICAMT</indexFieldName>
+      <name>RDOT_ICAMT</name>
+      <stored>true</stored>
+      <type>double</type>
+    </indexFields>
+    <indexFields>
+      <analyzed>true</analyzed>
+      <fieldanalyzer>Standard</fieldanalyzer>
+      <indexFieldName>RDOT_ICDITYU</indexFieldName>
+      <name>RDOT_ICDITYU</name>
+      <stored>true</stored>
+      <type>string</type>
+    </indexFields>
+    <indexFields>
+      <analyzed>true</analyzed>
+      <fieldanalyzer>Standard</fieldanalyzer>
+      <indexFieldName>RDOT_ICFLAG2</indexFieldName>
+      <name>RDOT_ICFLAG2</name>
+      <stored>true</stored>
+      <type>string</type>
+    </indexFields>
+    <indexFields>
+      <analyzed>true</analyzed>
+      <fieldanalyzer>Standard</fieldanalyzer>
+      <indexFieldName>RDOT_ICONUS</indexFieldName>
+      <name>RDOT_ICONUS</name>
+      <stored>true</stored>
+      <type>string</type>
+    </indexFields>
+    <indexFields>
+      <analyzed>true</analyzed>
+      <fieldanalyzer>Standard</fieldanalyzer>
+      <indexFieldName>RDOT_ICPCTL</indexFieldName>
+      <name>RDOT_ICPCTL</name>
+      <stored>true</stored>
+      <type>string</type>
+    </indexFields>
+    <indexFields>
+      <analyzed>true</analyzed>
+      <fieldanalyzer>Standard</fieldanalyzer>
+      <indexFieldName>RDOT_ICSEQ12</indexFieldName>
+      <name>RDOT_ICSEQ12</name>
+      <stored>true</stored>
+      <type>string</type>
+    </indexFields>
+    <indexFields>
+      <analyzed>true</analyzed>
+      <fieldanalyzer>Standard</fieldanalyzer>
+      <indexFieldName>RDOT_ICSEQ12_ORIG</indexFieldName>
+      <name>RDOT_ICSEQ12_ORIG</name>
+      <stored>true</stored>
+      <type>string</type>
+    </indexFields>
+    <indexFields>
+      <analyzed>false</analyzed>
+      <fieldanalyzer />
+      <indexFieldName>RDOT_SRCCNTL</indexFieldName>
+      <name>RDOT_SRCCNTL</name>
+      <stored>true</stored>
+      <type>string</type>
+    </indexFields>
+    <indexFields>
+      <analyzed>true</analyzed>
+      <fieldanalyzer>Standard</fieldanalyzer>
+      <indexFieldName>LAST_6_TRREDOT_SEQUENCE</indexFieldName>
+      <name>LAST_6_TRREDOT_SEQUENCE</name>
+      <stored>true</stored>
+      <type>string</type>
+    </indexFields>
+    <indexFields>
+      <analyzed>true</analyzed>
+      <fieldanalyzer>Keyword</fieldanalyzer>
+      <indexFieldName>IndexCreditRunningTotal</indexFieldName>
+      <name>IndexCreditRunningTotal</name>
+      <stored>true</stored>
+      <type>double</type>
+    </indexFields>
+  </indexFields>
+  <analyzerName />
+  <persistenceModel>0</persistenceModel>
+  <isUpdate>false</isUpdate>
+  <primaryKey>UniqueRecordID</primaryKey>
+  <updateBlankFields>false</updateBlankFields>
+  <diskChunkSize>0</diskChunkSize>
+  <isBatchCommit>true</isBatchCommit>
+  <batchSize>1</batchSize>
+  <indexWriteMode>OVERWRITE</indexWriteMode>
+</indexBuilderConfiguration>]]></settings><input_ports><input_port id="b6ef327b-3ec4-4d70-8e59-3e6af8ffdef1"><channel idref="f04987ce-fafa-463d-bcfb-2bcbbf043745"/><label>input_port</label><port_name>input_port</port_name></input_port></input_ports><options/><output_ports><output_port id="8e4c3159-e79e-4744-a7a5-49f9c9d63521"><label>sink_error_port</label><port_name>sink_error_port</port_name></output_port></output_ports><properties><property><name>ViewData</name><value/></property><property><name>stageItemName</name><value><![CDATA[indexsinkstage]]></value></property></properties></stage><stage id="e36453ff-407b-40e4-bc36-1cb30cde2803"><stage_name>transformer</stage_name><stage_version/><label>Transformer</label><num_instances>1</num_instances><distributed>false</distributed><batch_size>10000</batch_size><settings><![CDATA[<?xml version="1.0" encoding="utf-16"?>
+<TransformerSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="3.0">
+  <transformDefinitions>
+    <transformDefinition>
+      <name>Custom</name>
+      <script>data['IndexCreditRunningTotal']  =data['CreditTotal1'] </script>
+      <isListTransform>false</isListTransform>
+      <transformParameters>
+        <transformParameter>
+          <name>outputColumn</name>
+          <type>double</type>
+          <value>IndexCreditRunningTotal</value>
+        </transformParameter>
+        <transformParameter>
+          <name>transformName</name>
+          <type>string</type>
+          <value>Custom Transform</value>
+        </transformParameter>
+      </transformParameters>
+      <transformFields>
+        <transformField>
+          <name>IndexCreditRunningTotal</name>
+          <type>double</type>
+          <fieldType xsi:type="SimpleFieldTypeInternal">
+            <name>double</name>
+          </fieldType>
+        </transformField>
+      </transformFields>
+    </transformDefinition>
+  </transformDefinitions>
+</TransformerSettings>]]></settings><input_ports><input_port id="d3b7597e-6148-45ea-8951-f6ab058e2649"><channel idref="df0ad01f-99d9-4859-b125-75a2e1326e21"/><label>input_port</label><port_name>input_port</port_name></input_port></input_ports><options/><output_ports><output_port id="0c537932-e45c-432a-9ec7-71d189e2b236"><channel idref="19acd7f9-aeec-4cff-b786-d86bec564378"/><label>output_port</label><port_name>output_port</port_name></output_port></output_ports><properties><property><name>ViewData</name><value/></property><property><name>stageItemName</name><value><![CDATA[transformer]]></value></property></properties></stage><stage id="a02175a8-4ab2-4ee2-b19d-2c037718e85b"><stage_name>multicaster</stage_name><stage_version/><label>Broadcaster</label><num_instances>1</num_instances><distributed>false</distributed><batch_size>10000</batch_size><input_ports><input_port id="5593977b-9245-4291-83d3-36dc59d23da4"><channel idref="f8274425-4816-44f2-855d-b1628d62250a"/><label>input_port</label><port_name>input_port</port_name></input_port></input_ports><options/><output_ports><output_port id="ece683a3-8bea-446a-8ce1-00d5d4820c4b"><channel idref="df0ad01f-99d9-4859-b125-75a2e1326e21"/><label>port 2</label><port_name/></output_port></output_ports><properties><property><name>ViewData</name><value/></property><property><name>stageItemName</name><value><![CDATA[multicaster]]></value></property></properties></stage><stage id="c81e6e2e-9bc7-4430-943b-5b1b750ee0a8"><stage_name>transformer</stage_name><stage_version/><label>TF_OffSet- Copy (2)</label><num_instances>1</num_instances><distributed>false</distributed><batch_size>10000</batch_size><settings><![CDATA[<?xml version="1.0" encoding="utf-16"?>
+<TransformerSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="3.0">
+  <transformDefinitions>
+    <transformDefinition>
+      <name>Custom</name>
+      <script>// Credit Total should be greater than DebitRunning Total, set offset indicator.
+// This indicator is used for add transaction of offset scenario.
+
+double dCreditTotal = roundTo(data['CreditTotal'].toDouble(),2)
+double dRunningTotal = roundTo(data['RunningTotal'].toDouble(),2)
+
+
+if (data['CollectionRecordType'] == 'BestOfBreed') {
+
+if ( dCreditTotal &gt; dRunningTotal) {
+data['OffSetIndicator'] = '1'
+data['RDOT_ICAMT'] = roundTo(dCreditTotal - dRunningTotal,2)
+data['RunningTotal'] = roundTo(dCreditTotal,2)
+}
+else
+data['OffSetIndicator'] = '0'
+}
+
+data['RunningTotal1'] = roundTo(data['RunningTotal'].toDouble(),2)
+data['CreditTotal1']  = roundTo(data['CreditTotal'].toDouble(),2)
+</script>
+      <isListTransform>false</isListTransform>
+      <transformParameters>
+        <transformParameter>
+          <name>outputColumn</name>
+          <type>double</type>
+          <value>RunningTotal1</value>
+        </transformParameter>
+        <transformParameter>
+          <name>outputColumn</name>
+          <type>double</type>
+          <value>CreditTotal1</value>
+        </transformParameter>
+        <transformParameter>
+          <name>transformName</name>
+          <type>string</type>
+          <value>OffSetIndicator</value>
+        </transformParameter>
+      </transformParameters>
+      <transformFields>
+        <transformField>
+          <name>RunningTotal1</name>
+          <type>double</type>
+          <fieldType xsi:type="SimpleFieldTypeInternal">
+            <name>double</name>
+          </fieldType>
+        </transformField>
+        <transformField>
+          <name>CreditTotal1</name>
+          <type>double</type>
+          <fieldType xsi:type="SimpleFieldTypeInternal">
+            <name>double</name>
+          </fieldType>
+        </transformField>
+      </transformFields>
+    </transformDefinition>
+    <transformDefinition>
+      <name>Custom</name>
+      <script>if (data['RDOT_ICFLAG2'] == 'C') {
+data['HubSearchKey_CR'] = data['RDOT_ICSEQ12'] + data['RDOT_ICONUS'] + roundTo(data['RDOT_ICAMT'],2) +data['RDOT_ICPCTL'] 
+}
+if (data['RDOT_ICFLAG2'] == 'D') {
+ data['HubSearchKey_Debit'] = data['RDOT_ICSEQ12_ORIG'] + data['RDOT_ICONUS'] + roundTo(data['RDOT_ICAMT'],2) + data['RDOT_ICPCTL']
+}</script>
+      <isListTransform>false</isListTransform>
+      <transformParameters>
+        <transformParameter>
+          <name>outputColumn</name>
+          <type>string</type>
+          <value>HubSearchKey_CR</value>
+        </transformParameter>
+        <transformParameter>
+          <name>outputColumn</name>
+          <type>string</type>
+          <value>HubSearchKey_Debit</value>
+        </transformParameter>
+        <transformParameter>
+          <name>transformName</name>
+          <type>string</type>
+          <value>Custom Transform</value>
+        </transformParameter>
+      </transformParameters>
+      <transformFields>
+        <transformField>
+          <name>HubSearchKey_CR</name>
+          <type>string</type>
+          <fieldType xsi:type="SimpleFieldTypeInternal">
+            <name>string</name>
+          </fieldType>
+        </transformField>
+        <transformField>
+          <name>HubSearchKey_Debit</name>
+          <type>string</type>
+          <fieldType xsi:type="SimpleFieldTypeInternal">
+            <name>string</name>
+          </fieldType>
+        </transformField>
+      </transformFields>
+    </transformDefinition>
+    <transformDefinition>
+      <name>Custom</name>
+      <script>int len
+len = data['RDOT_ICSEQ12_ORIG'].length()
+
+data['LAST_6_TRREDOT_SEQUENCE'] = substring(data['RDOT_ICSEQ12_ORIG'],len-6,len)</script>
+      <isListTransform>false</isListTransform>
+      <transformParameters>
+        <transformParameter>
+          <name>outputColumn</name>
+          <type>string</type>
+          <value>LAST_6_TRREDOT_SEQUENCE</value>
+        </transformParameter>
+        <transformParameter>
+          <name>transformName</name>
+          <type>string</type>
+          <value>Last_6_TRREDOT_SEQUENCE_NUMBER</value>
+        </transformParameter>
+      </transformParameters>
+      <transformFields>
+        <transformField>
+          <name>LAST_6_TRREDOT_SEQUENCE</name>
+          <type>string</type>
+          <fieldType xsi:type="SimpleFieldTypeInternal">
+            <name>string</name>
+          </fieldType>
+        </transformField>
+      </transformFields>
+    </transformDefinition>
+  </transformDefinitions>
+</TransformerSettings>]]></settings><input_ports><input_port id="efb7e503-ea74-48d4-8610-ae6890d63105"><channel idref="9b4b8983-41d6-4642-af83-5bf834abfb49"/><label>input_port</label><port_name>input_port</port_name></input_port></input_ports><options/><output_ports><output_port id="8fbccb8b-b891-4c10-9055-5bd7abf702ab"><channel idref="70f80984-ba2b-4935-a43d-81cdc68c5c77"/><label>output_port</label><port_name>output_port</port_name></output_port></output_ports><properties><property><name>ViewData</name><value/></property><property><name>stageItemName</name><value><![CDATA[transformer]]></value></property></properties></stage></stages><reports/><notifications/><dataflow_options/><type>2</type><vendor/></dataflow></exportedDataflow>
