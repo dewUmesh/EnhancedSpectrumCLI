@@ -75,6 +75,7 @@ def main():
     p = PreProcessing()
     training_data,test_data,training_target,test_target = p.set_data(iris.data,iris.target).get_train_test_splits()
     print(test_data)
+    print(test_target)
     # model = AdalineGD(0.001,60)
     # # print(iris.data[:10,:])
     # # print(np.array(iris.target[0:10])[np.newaxis])
