@@ -6,6 +6,7 @@ from subprocess import PIPE, Popen
 import sys
 from os import path
 import platform
+import errno
 
 
 class Utilities:
@@ -18,6 +19,29 @@ class Utilities:
             f.write()
             f.close()
         return fname
+
+    @staticmethod
+    def create_directory(directory):
+        try:
+            os.makedirs(directory)
+        except OSError as e:
+            if e.errno != errno.EEXIST:
+                raise
+        return directory
+
+    @staticmethod
+    def write_to_file(fname,string):
+        print(string)
+        with open(fname,"w") as f:
+            f.write(string)
+            f.close()
+
+    @staticmethod
+    def read_from_file(fname):
+        with open(fname,"r") as f:
+            string=f.readline()
+            f.close()
+        return string
 
     def get_file_content(self, fname):
         """
@@ -90,7 +114,10 @@ class System:
         output, err = p.communicate()
         exitcode = p.returncode
         print("-----------------------------------------")
-        print(output.decode("utf-8"))
+        try:
+            print(output)
+        except:
+            sys.exit()
         print(err.decode("utf-8"))
         t = list(err.decode("utf-8"))
         # print(t)
@@ -101,14 +128,17 @@ class System:
 
 class Connection:
 
-    def __init__(self, hostname=socket.gethostname(), port="9090", username="admin", password="admin"):
+    def __init__(self, hostname=socket.gethostname(), port="8080", username="admin", password="admin"):
         self.hostname = str(hostname)
         self.port = str(port)
         self.username = str(username)
         self.password = str(password)
 
-    def get_connection_string(self):
-        return "connect --h {}:{} --u {} --p {}".format(self.hostname, self.port, self.username, self.password)
+    def get_connection_string(self,env="default"):
+        if (env.__eq__("default")):
+            return str("connect --h {}:{} --u {} --p {}".format(self.hostname, self.port, self.username, self.password))
+        else:
+            return  self.get_environment(env)
 
     def set_hostname(self, hostname):
         self.hostname = hostname
@@ -125,6 +155,21 @@ class Connection:
     @staticmethod
     def close_connection(self):
         return "close"
+
+
+    def set_environment(self,env):
+        """
+        Set Environment connection details dev,uat,sit,prod
+        :param self:
+        :return:
+        """
+        print("Inside set environement method")
+        print(self.get_connection_string())
+        Utilities.write_to_file(os.path.join(Utilities.create_directory("config"),env),str(self.get_connection_string()))
+
+    def get_environment(self,env):
+        env=os.path.join("config",env)
+        return Utilities.read_from_file(env)
 
 
 class CommandHandler:
@@ -156,6 +201,8 @@ class CommandHandler:
         self.run.execute_cli(tfile)
         print(tfile)
 
+    def help(self):
+        command="help"
 
 class ArgumentHandler:
 
@@ -174,21 +221,23 @@ class ArgumentHandler:
     def switch(self, argument):
 
         if str(argument).__eq__("dataflow list"):
-            self.cmd.dataflow_list(Connection().get_connection_string())
+            self.cmd.dataflow_list(Connection().get_connection_string(self.args.env))
 
         elif str(argument).__eq__("dataflow export"):
             try:
-                self.connection.set_hostname(self.args.servername)
-                self.cmd.dataflow_export(self.connection.get_connection_string(), self.args.filename)
+                #self.connection.set_hostname(self.args.servername)
+                self.cmd.dataflow_export(self.connection.get_connection_string(self.args.env), self.args.filename)
             except:
                 print("Invalid arguments ... try help : [ {} -h ]".format(path.basename(sys.argv[0])))
 
         elif str(argument).__eq__("dataflow import"):
             try:
-                self.connection.set_hostname(self.args.servername)
+                #self.connection.set_hostname(self.args.servername)
                 self.cmd.dataflow_import(self.connection.get_connection_string(), self.args.filename)
             except:
                 print("Invalid arguments ... try help : [ {} -h ]".format(path.basename(sys.argv[0])))
+
+
 
         # switcher={
         #
@@ -222,13 +271,26 @@ def main():
                                                eg: "dataflow list"
                         """), type=str)
     parser.add_argument("-s", "--servername", help="Host name of machine where to execute command")
+    parser.add_argument("-u", "--username", help="")
+    parser.add_argument("-pw", "--password", help="")
+    parser.add_argument("-p", "--port", help="")
     parser.add_argument("-f", "--filename",
                         help="File name having names of [dataflows] OR [processflows] OR [subflows]")
+    parser.add_argument("-e","--env",help="")
+
+    parser.add_argument("-setenv",help="Set dev,sit,uat,prod environemnt connection variables "
+                            "-e dev -s 'servername' -p 'port' -u 'username' -pw 'password' "
+                                       "-setenv=y -e dev -s localhost -p 9090 -u admin -pw admin")
 
     args = parser.parse_args()
 
-    arg_handler = ArgumentHandler(args)
-    arg_handler.run()
+    if str(args.setenv).__eq__("y"):
+        print("Set environment ")
+        c=Connection(args.servername,args.port,args.username,args.password)
+        c.set_environment(args.env)
+    else:
+        arg_handler = ArgumentHandler(args)
+        arg_handler.run()
 
 
 if __name__ == '__main__':
