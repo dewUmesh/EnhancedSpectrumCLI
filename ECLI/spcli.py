@@ -111,19 +111,28 @@ class System:
         else:
             p = Popen([os.path.join(os.getcwd(), "cli.sh"), " --cmdfile {}".format(cmdfile)], stdout=PIPE, stderr=PIPE)
 
-        output, err = p.communicate()
-        exitcode = p.returncode
-        print("-----------------------------------------")
+        out, err = p.communicate()
+        e_code = p.returncode
+        output = list()
+        error =list()
+
+        # print("-----------------------------------------")
         try:
-            print(output)
+
+            for i in out.split(b'\n'):
+                string = i.decode("utf-8")
+
+                output.append(string)
         except:
-            sys.exit()
-        print(err.decode("utf-8"))
-        t = list(err.decode("utf-8"))
-        # print(t)
-        # print("ERROR: {}".format(err.decode("utf-8")))
-        print(" process exit code is : {}".format(exitcode))
-        print("-----------------------------------------")
+            print("")
+        try:
+            for i in err.split(b'\n'):
+                string = i.decode("utf-8")
+                error.append(string)
+        except:
+            print("Error : creating err list")
+
+        return {'output':output,'error':error,'exitcode':e_code}
 
 
 class Connection:
@@ -179,12 +188,43 @@ class CommandHandler:
         self.utility = Utilities()
         self.run = System()
 
-    def dataflow_list(self, connection):
+    def get_dataflow_list(self,connection):
         command = "dataflow list"
         tfile = self.utility.set_command_file(connection, command, "dataflowlist.out", list())
-        print(tfile)
-        self.run.execute_cli(tfile)
-        return "executed dataflow list"
+        # print(tfile)
+        return self.run.execute_cli(tfile)
+
+
+    def dataflow_list(self, connection):
+        result=self.get_dataflow_list(connection)
+
+        for i in result.get('output'):
+            print(i)
+        for i in result.get('error'):
+            print(i)
+
+        print(result.get('exitcode'))
+        # dict_object =dict()
+        # l = list()
+        # i=0
+        #
+        # for e in dflist:
+        #     string =str(e)
+        #     if len(string.strip()).__eq__(0):
+        #         dflist.remove(e)
+        # dflist = dflist[4:len(dflist) - 2]
+        #
+        # for j in dflist:
+        #     t=j.split('|')
+        #
+        #     dict_object ={'NAME':t[1].strip(),'TYPE':t[2].strip(),'EXPOSED':t[3].strip()}
+        #     l.append(dict_object)
+        #     # NAME | TYPE | EXPOSED
+        #
+        #
+        #
+        # for e in l:
+        #     print(e.get('NAME'))
 
     def dataflow_export(self, connection, fileName):
         command = "dataflow export  --e True --o exports --d "
