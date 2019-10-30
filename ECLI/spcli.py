@@ -192,39 +192,34 @@ class CommandHandler:
         command = "dataflow list"
         tfile = self.utility.set_command_file(connection, command, "dataflowlist.out", list())
         # print(tfile)
-        return self.run.execute_cli(tfile)
+        result = self.run.execute_cli(tfile)
 
+        l = list()
+        if result.get('exitcode') != 0:
+            print("ERROR : exitCode = ", result.get('exitcode'))
+            for i in result.get('error'):
+                print(i)
+                exit(1)
+        else:
+
+            dflist=result.get('output')
+            for e in dflist:
+                string = str(e)
+                if len(string.strip()).__eq__(0):
+                    dflist.remove(e)
+            dflist = dflist[4:len(dflist) - 2]
+            for j in dflist:
+                t = j.split('|')
+                dict_object = {'NAME': t[1].strip(), 'TYPE': t[2].strip(), 'EXPOSED': t[3].strip()}
+                l.append(dict_object)
+
+        return l
 
     def dataflow_list(self, connection):
         result=self.get_dataflow_list(connection)
+        for i in result:
+            print(i.get('NAME'),i.get('TYPE'),i.get('EXPOSED'))
 
-        for i in result.get('output'):
-            print(i)
-        for i in result.get('error'):
-            print(i)
-
-        print(result.get('exitcode'))
-        # dict_object =dict()
-        # l = list()
-        # i=0
-        #
-        # for e in dflist:
-        #     string =str(e)
-        #     if len(string.strip()).__eq__(0):
-        #         dflist.remove(e)
-        # dflist = dflist[4:len(dflist) - 2]
-        #
-        # for j in dflist:
-        #     t=j.split('|')
-        #
-        #     dict_object ={'NAME':t[1].strip(),'TYPE':t[2].strip(),'EXPOSED':t[3].strip()}
-        #     l.append(dict_object)
-        #     # NAME | TYPE | EXPOSED
-        #
-        #
-        #
-        # for e in l:
-        #     print(e.get('NAME'))
 
     def dataflow_export(self, connection, fileName):
         command = "dataflow export  --e True --o exports --d "
