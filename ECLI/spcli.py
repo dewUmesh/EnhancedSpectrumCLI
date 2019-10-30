@@ -225,8 +225,8 @@ class CommandHandler:
         command = "dataflow export  --e True --o exports --d "
         tfile = self.utility.set_command_file(connection, command, "dataflowexport.out",
                                               self.utility.get_file_content(fileName))
-        self.run.execute_cli(tfile)
-        print(tfile)
+        result=self.run.execute_cli(tfile)
+        print(result)
         return "executed dataflow export "
 
     def dataflow_import(self, connection, fileName):
