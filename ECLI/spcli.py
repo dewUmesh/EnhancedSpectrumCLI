@@ -302,6 +302,7 @@ def main():
     # cmd.dataflow_export(c.get_connection_string(),"dataflowexport.txt")
     # cmd.dataflow_import(c.get_connection_string(), "dataflowexport.txt")
     parser = argparse.ArgumentParser()
+    #parser.add_argument("-h",help="Usage : spcli.py -e dev -c dataflow list")
     parser.add_argument("-c", "--command", help=textwrap.dedent("""Usage: Spectrum command name
                                                eg: "dataflow list"
                         """), type=str)
@@ -314,11 +315,18 @@ def main():
     parser.add_argument("-e","--env",help="")
 
     parser.add_argument("-setenv",help="Set dev,sit,uat,prod environemnt connection variables "
-                            "-e dev -s 'servername' -p 'port' -u 'username' -pw 'password' "
+                            "-e 'environmentType' -s 'servername' -p 'port' -u 'username' -pw 'password' "
                                        "-setenv=y -e dev -s localhost -p 9090 -u admin -pw admin")
 
     args = parser.parse_args()
 
+    print("""
+        Note    :Must set environment before running any command
+        Example :spcli.py -setenv=y -e dev -s localhost -p 9090 -u admin -pw admin
+        Usage   :spcli.py -e "environment" -c "command" 
+        Example :spcli.py -e dev -c "dataflow list"
+        For help type:  spcli.py -h 
+        """)
     if str(args.setenv).__eq__("y"):
         print("Set environment ")
         c=Connection(args.servername,args.port,args.username,args.password)
