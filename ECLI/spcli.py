@@ -188,11 +188,37 @@ class CommandHandler:
         self.utility = Utilities()
         self.run = System()
 
+    def get_command_results(self,connection,command,outfile,dataflow_list):
+        """
+
+        :param connection: Environment connection string dev,uat,sit,prod....
+        :param command: Command to run like "dataflow list"
+        :param outfile: File keeps connection and  commandlets
+        :param dataflow_list: array of data flow/process flow file list
+        :return: dictonary of output,error and command exitcode
+        """
+        tfile = self.utility.set_command_file(connection, command, outfile, dataflow_list)
+        result_dict = self.run.execute_cli(tfile)
+        return result_dict
+
+    def remove_empty_rows(self,list):
+        for e in list:
+            string = str(e)
+            if len(string.strip()).__eq__(0):
+                list.remove(e)
+        return list
+
+    def remove_format_rows(self,list):
+        for e in list:
+            string = str(e)
+
+            if len(string.strip()).__eq__(0):
+                list.remove(e)
+        return list
+
     def get_dataflow_list(self,connection):
         command = "dataflow list"
-        tfile = self.utility.set_command_file(connection, command, "dataflowlist.out", list())
-        # print(tfile)
-        result = self.run.execute_cli(tfile)
+        result = self.get_command_results(connection,command,"tmp.out",list())
 
         l = list()
         if result.get('exitcode') != 0:
@@ -217,20 +243,40 @@ class CommandHandler:
 
     def dataflow_list(self, connection):
         result=self.get_dataflow_list(connection)
+
         for i in result:
             print(i.get('NAME'),i.get('TYPE'),i.get('EXPOSED'))
 
+    def get_flow_version(self,connection):
+        df_dictonary=self.get_dataflow_list(connection)
+        df_list =list()
+        for d in df_dictonary:
+            df_list.append(d.get('NAME'))
+        print(df_list)
 
-    def dataflow_export(self, connection, fileName):
-        command = "dataflow export  --e True --o exports --d "
+        command="dataflow version list --n "
+        # element=list()
+        # element.insert(0,df_list.pop(1))
+        # print(element)
+        result =self.get_command_results(connection,command,"tmp.out",df_list)
+
+        for e in self.remove_format_rows(self.remove_empty_rows(result.get('output'))):
+            print(e)
+            # print("=========================================")
+
+    def check_out_list(self,connection,command):
+        self.get_flow_version(connection)
+
+    def dataflow_export(self, connection,command, fileName):
+        command = "{}  --e True --o exports --d ".format(command)
         tfile = self.utility.set_command_file(connection, command, "dataflowexport.out",
                                               self.utility.get_file_content(fileName))
         result=self.run.execute_cli(tfile)
         print(result)
         return "executed dataflow export "
 
-    def dataflow_import(self, connection, fileName):
-        command = "dataflow import --u True --f "
+    def dataflow_import(self, connection,command, fileName):
+        command = "{} --u True --f ".format(command)
         dflist = self.utility.add_path(self.utility.add_job_extention(self.utility.get_file_content(fileName), "df"),"exports")
         tfile = self.utility.set_command_file(connection, command, "dataflowimport.out", dflist)
         self.run.execute_cli(tfile)
@@ -241,7 +287,7 @@ class CommandHandler:
 
 class ArgumentHandler:
 
-    commandList = ('dataflow export', 'processflow export', 'dataflow list')
+    commandList = ('dataflow export', 'processflow export', 'dataflow list','check out')
 
     def __init__(self, args):
 
@@ -251,28 +297,34 @@ class ArgumentHandler:
 
 
     def run(self):
-        self.switch(self.args.command)
+        self.switch()
 
-    def switch(self, argument):
+    def switch(self):
 
-        if str(argument).__eq__("dataflow list"):
-            self.cmd.dataflow_list(Connection().get_connection_string(self.args.env))
+        if str(self.args.command).__eq__("dataflow list"):
+            self.cmd.dataflow_list(self.connection.get_connection_string(self.args.env))
 
-        elif str(argument).__eq__("dataflow export"):
+        elif str(self.args.command).__eq__("dataflow export"):
             try:
                 #self.connection.set_hostname(self.args.servername)
-                self.cmd.dataflow_export(self.connection.get_connection_string(self.args.env), self.args.filename)
+                self.cmd.dataflow_export(self.connection.get_connection_string(self.args.env),self.args.command, self.args.filename)
             except:
                 print("Invalid arguments ... try help : [ {} -h ]".format(path.basename(sys.argv[0])))
 
-        elif str(argument).__eq__("dataflow import"):
+        elif str(self.args.command).__eq__("dataflow import"):
             try:
                 #self.connection.set_hostname(self.args.servername)
-                self.cmd.dataflow_import(self.connection.get_connection_string(), self.args.filename)
+                self.cmd.dataflow_import(self.connection.get_connection_string(self.args.env),self.args.command, self.args.filename)
             except:
                 print("Invalid arguments ... try help : [ {} -h ]".format(path.basename(sys.argv[0])))
 
+        elif str(self.args.command).__eq__("check out"):
+            try:
 
+                # self.connection.set_hostname(self.args.servername)
+                self.cmd.check_out_list(self.connection.get_connection_string(self.args.env), self.args.command)
+            except:
+                print("Invalid arguments ... try help : [ {} -h ]".format(path.basename(sys.argv[0])))
 
         # switcher={
         #
@@ -319,14 +371,21 @@ def main():
                                        "-setenv=y -e dev -s localhost -p 9090 -u admin -pw admin")
 
     args = parser.parse_args()
+    arg_exist=0
 
-    print("""
-        Note    :Must set environment before running any command
-        Example :spcli.py -setenv=y -e dev -s localhost -p 9090 -u admin -pw admin
-        Usage   :spcli.py -e "environment" -c "command" 
-        Example :spcli.py -e dev -c "dataflow list"
-        For help type:  spcli.py -h 
-        """)
+    for i in vars(args):
+        if not str(getattr(args, i)).__eq__('None'):
+            arg_exist=1
+            break
+    if arg_exist == 0:
+        print("""
+            Note    :Must set environment before running any command
+            Example :spcli.py -setenv=y -e dev -s localhost -p 9090 -u admin -pw admin
+            Usage   :spcli.py -e "environment" -c "command" 
+            Example :spcli.py -e dev -c "dataflow list"
+            For help type:  spcli.py -h 
+            """)
+        exit(1)
     if str(args.setenv).__eq__("y"):
         print("Set environment ")
         c=Connection(args.servername,args.port,args.username,args.password)
