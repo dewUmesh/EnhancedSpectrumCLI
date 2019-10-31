@@ -292,7 +292,7 @@ class CommandHandler:
 
             except:
                 print("ERROR**")
-            # print("=========================================")
+
         print(list_of_dict_objects)
 
     def check_out_list(self,connection,command):
