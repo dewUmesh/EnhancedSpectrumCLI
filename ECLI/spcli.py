@@ -201,20 +201,29 @@ class CommandHandler:
         result_dict = self.run.execute_cli(tfile)
         return result_dict
 
-    def remove_empty_rows(self,list):
-        for e in list:
+    def remove_empty_rows(self,t_list):
+        for e in t_list:
             string = str(e)
             if len(string.strip()).__eq__(0):
-                list.remove(e)
-        return list
+                t_list.remove(e)
+        return list(t_list)
 
-    def remove_format_rows(self,list):
-        for e in list:
+    def remove_format_rows(self,t_list):
+        for e in t_list:
             string = str(e)
 
             if len(string.strip()).__eq__(0):
-                list.remove(e)
-        return list
+                t_list.remove(e)
+        return list(t_list)
+
+    def remove_empty_elements(self,t_list):
+
+        tmp_list=[x.strip() for x in t_list]
+        for i in tmp_list:
+            if len(i) == 0:
+                tmp_list.remove(i)
+
+        return list(tmp_list)
 
     def get_dataflow_list(self,connection):
         command = "dataflow list"
@@ -258,11 +267,33 @@ class CommandHandler:
         # element=list()
         # element.insert(0,df_list.pop(1))
         # print(element)
-        result =self.get_command_results(connection,command,"tmp.out",df_list)
+        result = self.get_command_results(connection,command,"tmp.out",df_list)
+        t_list = self.remove_empty_rows(result.get('output'))
+        list_of_dict_objects=list()
+        for e in t_list:
+            string =str(e)
+            # print(string)
+            try:
+                for i in df_list:
+                    # print(i)
+                    if string.strip().__eq__(i.strip()):
 
-        for e in self.remove_format_rows(self.remove_empty_rows(result.get('output'))):
-            print(e)
+
+                        idx=t_list.index(e)
+                        data=t_list.pop(idx+4).split('|')
+                        header=list(t_list.pop(idx+2).split('|'))
+                        header.append('NAME')
+                        data.append(e)
+                        header=self.remove_empty_elements(header)
+                        data=self.remove_empty_elements(data)
+                        dict_object=dict(zip(header,data))
+                        list_of_dict_objects.append(dict_object)
+
+
+            except:
+                print("ERROR**")
             # print("=========================================")
+        print(list_of_dict_objects)
 
     def check_out_list(self,connection,command):
         self.get_flow_version(connection)
