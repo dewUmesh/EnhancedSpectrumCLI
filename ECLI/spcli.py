@@ -281,49 +281,30 @@ class CommandHandler:
         print(df_list)
 
         list_of_dict_objects = list()
-        # _inList=list()
-        # for x in df_list:
-        #     _inList.insert(0,x)
+        _inList=list()
+        for x in df_list:
+            _inList.insert(0,x)
 
 
-        result = self.get_command_results(connection,command,"tmp.out",df_list)
-        # _inList.clear()
-        # print(result.get('output'))
-        t_list = self.remove_empty_rows(result.get('output'))
-        # print(t_list)
-        f_list=list()
+            result = self.get_command_results(connection,command,"tmp.out",_inList)
+            _inList.clear()
+            # print(result.get('output'))
+            t_list = self.remove_empty_rows(result.get('output'))
+            name=t_list[1]
+            header=t_list[2].split('|')
+            header = self.remove_empty_elements(header)
 
-        for x in t_list:
-            if x in df_list:
-                idx=t_list.index(x)
-                x='${}'.format(x)
-                t_list.insert(idx,x)
+            i = 2
+            while i < (len(t_list) -1):
+                data =self.remove_empty_elements(t_list[i].split('|'))
+                _dict= dict(zip(header,data))
+                if _dict.get('EXPOSED').__eq__('true'):
+                    list_of_dict_objects.append(_dict)
+                    break
+                else:
+                    i +=1
+        print(list_of_dict_objects)
 
-        print(t_list)
-
-        # for e in t_list:
-        #     string =str(e)
-        #     # print(string)
-        #     try:
-        #         for i in df_list:
-        #             # print(i)
-        #             if string.strip().__eq__(i.strip()):
-        #
-        #
-        #                 idx=t_list.index(e)
-        #                 data=t_list.pop(idx+4).split('|')
-        #                 # print(data)
-        #                 header=list(t_list.pop(idx+2).split('|'))
-        #                 # print(header)
-        #                 header.append('NAME')
-        #                 data.append(e)
-        #                 header=self.remove_empty_elements(header)
-        #                 data=self.remove_empty_elements(data)
-        #                 dict_object=dict(zip(header,data))
-        #                 # if dict_object.get('EXPOSED').__eq__('true'):
-        #                 list_of_dict_objects.append(dict_object)
-        #     except:
-        #         print("ERROR**")
 
         return list(list_of_dict_objects)
 
