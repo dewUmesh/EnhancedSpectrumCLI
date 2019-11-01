@@ -27,6 +27,7 @@ class AdalineGD(object):
         self.w_ = np.zeros(1 + data_matrix.shape[1])
         self.error_ : []
         self.cost_vector = list()
+        self.threshold_vector = list()
 
         for i in range(self.n_iter):
             result_vector = self.matrix_to_weight_vector_dot_product(data_matrix)
@@ -35,6 +36,7 @@ class AdalineGD(object):
             self.w_[1:] += self.eta0 * (np.dot(data_matrix.T,error_vector))
             self.w_[0] += self.eta0 * error_vector.sum()
             self.cost_vector.append(sum(np.square(error_vector))/2)
+            self.threshold_vector.append(self.w_[0])
 
 
     def matrix_to_weight_vector_dot_product(self,data_matrix):
@@ -47,8 +49,17 @@ class AdalineGD(object):
         return np.where(self.activation(test_data_matrix) >=0.0,1,-1)
 
     def plot(self):
+        print(self.w_.shape)
         import matplotlib.pyplot as plt
-        plt.scatter(range(1,len(self.cost_vector)+1),self.cost_vector,marker='o')
+        import seaborn as sbn
+        sbn.set()
+        fig,f_index=plt.subplots(nrows=1,ncols=2,figsize=(8,4))
+        f_index[0].set_xlabel("Iterations")
+        f_index[0].set_ylabel("Cost")
+        f_index[0].scatter(range(1,len(self.cost_vector)+1),self.cost_vector,marker='o',color="b")
+        f_index[1].set_xlabel("Iterations")
+        f_index[1].set_ylabel("Threshold")
+        f_index[1].scatter(range(1,len(self.threshold_vector)+1),self.threshold_vector,marker='o',color="r")
         plt.show()
 
 
@@ -74,18 +85,18 @@ def main():
 
     p = PreProcessing()
     training_data,test_data,training_target,test_target = p.set_data(iris.data,iris.target).get_train_test_splits()
-    print(test_data)
-    print(test_target)
-    # model = AdalineGD(0.001,60)
-    # # print(iris.data[:10,:])
-    # # print(np.array(iris.target[0:10])[np.newaxis])
-    # data =np.concatenate((iris.data[:6,:],iris.data[145:,:]))
-    # target = np.concatenate((iris.target[0:6],iris.target[145:]))
-    #
-    # print(data.shape)
-    # print(target.shape)
-    # model.fit(data,target)
-    # model.plot()
+    # print(test_data)
+    # print(test_target)
+    model = AdalineGD(0.001,200)
+    # print(iris.data[:10,:])
+    # print(np.array(iris.target[0:10])[np.newaxis])
+    data =np.concatenate((iris.data[:6,:],iris.data[145:,:]))
+    target = np.concatenate((iris.target[0:6],iris.target[145:]))
+
+    print(data.shape)
+    print(target.shape)
+    model.fit(data,target)
+    model.plot()
 
 if __name__ == '__main__':
     main()

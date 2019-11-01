@@ -22,8 +22,10 @@ class Utilities:
 
     @staticmethod
     def create_directory(directory):
+
         try:
-            os.makedirs(directory)
+            if not os.path.exists(directory):
+                os.makedirs(directory)
         except OSError as e:
             if e.errno != errno.EEXIST:
                 raise
@@ -101,6 +103,16 @@ class Utilities:
             tlist.append(os.path.join(directorypath,e))
         return tlist
 
+    @staticmethod
+    def CONFIG_PATH():
+
+        return Utilities.create_directory(os.path.join(os.getcwd(),"config"))
+
+    @staticmethod
+    def STASH_PATH():
+        return Utilities.create_directory(os.path.join(os.getcwd(), "stash"))
+
+
 class System:
 
     def execute_cli(self, cmdfile):
@@ -174,7 +186,9 @@ class Connection:
         """
         print("Inside set environement method")
         print(self.get_connection_string())
-        Utilities.write_to_file(os.path.join(Utilities.create_directory("config"),env),str(self.get_connection_string()))
+        # Utilities.write_to_file(os.path.join(Utilities.create_directory("config"),env),str(self.get_connection_string()))
+        Utilities.write_to_file(os.path.join(Utilities.CONFIG_PATH(), env),
+                                str(self.get_connection_string()))
 
     def get_environment(self,env):
         env=os.path.join("config",env)
@@ -202,11 +216,12 @@ class CommandHandler:
         return result_dict
 
     def remove_empty_rows(self,t_list):
+        _list=list()
         for e in t_list:
-            string = str(e)
-            if len(string.strip()).__eq__(0):
-                t_list.remove(e)
-        return list(t_list)
+            string = str(e.strip())
+            if not len(string).__eq__(0) and not string.startswith('+----'):
+                _list.append(string)
+        return list(_list)
 
     def remove_format_rows(self,t_list):
         for e in t_list:
@@ -256,47 +271,73 @@ class CommandHandler:
         for i in result:
             print(i.get('NAME'),i.get('TYPE'),i.get('EXPOSED'))
 
-    def get_flow_version(self,connection):
+    def get_version_list(self,connection,command,message):
+
         df_dictonary=self.get_dataflow_list(connection)
+
         df_list =list()
         for d in df_dictonary:
             df_list.append(d.get('NAME'))
         print(df_list)
 
-        command="dataflow version list --n "
-        # element=list()
-        # element.insert(0,df_list.pop(1))
-        # print(element)
+        list_of_dict_objects = list()
+        # _inList=list()
+        # for x in df_list:
+        #     _inList.insert(0,x)
+
+
         result = self.get_command_results(connection,command,"tmp.out",df_list)
+        # _inList.clear()
+        # print(result.get('output'))
         t_list = self.remove_empty_rows(result.get('output'))
-        list_of_dict_objects=list()
-        for e in t_list:
-            string =str(e)
-            # print(string)
-            try:
-                for i in df_list:
-                    # print(i)
-                    if string.strip().__eq__(i.strip()):
+        # print(t_list)
+        f_list=list()
+
+        for x in t_list:
+            if x in df_list:
+                idx=t_list.index(x)
+                x='${}'.format(x)
+                t_list.insert(idx,x)
+
+        print(t_list)
+
+        # for e in t_list:
+        #     string =str(e)
+        #     # print(string)
+        #     try:
+        #         for i in df_list:
+        #             # print(i)
+        #             if string.strip().__eq__(i.strip()):
+        #
+        #
+        #                 idx=t_list.index(e)
+        #                 data=t_list.pop(idx+4).split('|')
+        #                 # print(data)
+        #                 header=list(t_list.pop(idx+2).split('|'))
+        #                 # print(header)
+        #                 header.append('NAME')
+        #                 data.append(e)
+        #                 header=self.remove_empty_elements(header)
+        #                 data=self.remove_empty_elements(data)
+        #                 dict_object=dict(zip(header,data))
+        #                 # if dict_object.get('EXPOSED').__eq__('true'):
+        #                 list_of_dict_objects.append(dict_object)
+        #     except:
+        #         print("ERROR**")
+
+        return list(list_of_dict_objects)
+
+    def check_out_list(self,connection,command,type,message,name=""):
+        if str(type).__eq__('dataflow'):
+            command = "dataflow version list --n "
+            v_list=self.get_version_list(connection,command,message)
+            # print(v_list)
+        elif str(type).__eq__('processflow'):
+            command = "processflow version list --n "
+            v_list = self.get_version_list(connection, command, message)
+            # print(v_list)
 
 
-                        idx=t_list.index(e)
-                        data=t_list.pop(idx+4).split('|')
-                        header=list(t_list.pop(idx+2).split('|'))
-                        header.append('NAME')
-                        data.append(e)
-                        header=self.remove_empty_elements(header)
-                        data=self.remove_empty_elements(data)
-                        dict_object=dict(zip(header,data))
-                        list_of_dict_objects.append(dict_object)
-
-
-            except:
-                print("ERROR**")
-
-        print(list_of_dict_objects)
-
-    def check_out_list(self,connection,command):
-        self.get_flow_version(connection)
 
     def dataflow_export(self, connection,command, fileName):
         command = "{}  --e True --o exports --d ".format(command)
@@ -353,7 +394,9 @@ class ArgumentHandler:
             try:
 
                 # self.connection.set_hostname(self.args.servername)
-                self.cmd.check_out_list(self.connection.get_connection_string(self.args.env), self.args.command)
+                self.cmd.check_out_list(self.connection.get_connection_string(self.args.env),
+                                        self.args.command,
+                                        self.args.type,self.args.message,self.args.name)
             except:
                 print("Invalid arguments ... try help : [ {} -h ]".format(path.basename(sys.argv[0])))
 
@@ -400,6 +443,10 @@ def main():
     parser.add_argument("-setenv",help="Set dev,sit,uat,prod environemnt connection variables "
                             "-e 'environmentType' -s 'servername' -p 'port' -u 'username' -pw 'password' "
                                        "-setenv=y -e dev -s localhost -p 9090 -u admin -pw admin")
+
+    parser.add_argument("-t", "--type", help=" Type dataflow or process flows ..etc")
+    parser.add_argument("-n", "--name", help=" Specific name of dataflow or process flow")
+    parser.add_argument("-m", "--message", help=" Commit messgae string")
 
     args = parser.parse_args()
     arg_exist=0
