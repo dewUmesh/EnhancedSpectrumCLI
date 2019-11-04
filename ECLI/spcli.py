@@ -219,7 +219,9 @@ class CommandHandler:
         _list=list()
         for e in t_list:
             string = str(e.strip())
-            if not len(string).__eq__(0) and not string.startswith('+----'):
+            if not len(string).__eq__(0) and not string.startswith('+----') and \
+                    not string.startswith("Connected to server:") and\
+                    not string.startswith("Closed connection to server"):
                 _list.append(string)
         return list(_list)
 
@@ -240,8 +242,17 @@ class CommandHandler:
 
         return list(tmp_list)
 
-    def get_dataflow_list(self,connection):
-        command = "dataflow list"
+    def remove_connection_strings(self,_list):
+        for i in _list:
+
+            if str(i).strip().startswith("Connected to server:") or \
+                    str(i).strip().startswith("Closed connection to server"):
+                _list.remove(i)
+
+        return _list
+
+    def get_flow_list(self,connection,command):
+
         result = self.get_command_results(connection,command,"tmp.out",list())
 
         l = list()
@@ -252,24 +263,41 @@ class CommandHandler:
                 exit(1)
         else:
 
-            dflist=result.get('output')
-            for e in dflist:
-                string = str(e)
-                if len(string.strip()).__eq__(0):
-                    dflist.remove(e)
-            dflist = dflist[4:len(dflist) - 2]
-            for j in dflist:
-                t = j.split('|')
-                dict_object = {'NAME': t[1].strip(), 'TYPE': t[2].strip(), 'EXPOSED': t[3].strip()}
-                l.append(dict_object)
+            dflist=self.remove_empty_rows(result.get('output'))
+
+            header=dflist.pop(0).split('|')
+            header=self.remove_empty_elements(header)
+            for x in dflist:
+                data = x.split('|')
+                data = self.remove_empty_elements(data)
+                if len(header).__eq__(len(data)):
+                    _dict = dict(zip(header,data))
+                    l.append(_dict)
+            # for e in dflist:
+            #     string = str(e)
+            #     if len(string.strip()).__eq__(0):
+            #         dflist.remove(e)
+            # dflist = dflist[4:len(dflist) - 2]
+            # for j in dflist:
+            #     t = j.split('|')
+            #     dict_object = {'NAME': t[1].strip(), 'TYPE': t[2].strip(), 'EXPOSED': t[3].strip()}
+            #     l.append(dict_object)
 
         return l
 
     def dataflow_list(self, connection):
-        result=self.get_dataflow_list(connection)
+        command = "dataflow list"
+        result=self.get_flow_list(connection,command)
 
         for i in result:
             print(i.get('NAME'),i.get('TYPE'),i.get('EXPOSED'))
+
+    def processflow_list(self, connection):
+        command = "processflow list"
+        result=self.get_flow_list(connection,command)
+
+        for i in result:
+            print(i.get('NAME'),i.get('EXPOSED'))
 
     def get_version_list(self,connection,command,message):
 
@@ -356,6 +384,9 @@ class ArgumentHandler:
 
         if str(self.args.command).__eq__("dataflow list"):
             self.cmd.dataflow_list(self.connection.get_connection_string(self.args.env))
+
+        elif str(self.args.command).__eq__("processflow list"):
+            self.cmd.processflow_list(self.connection.get_connection_string(self.args.env))
 
         elif str(self.args.command).__eq__("dataflow export"):
             try:
