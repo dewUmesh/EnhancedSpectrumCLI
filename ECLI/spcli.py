@@ -223,6 +223,7 @@ class CommandHandler:
                     not string.startswith("Connected to server:") and\
                     not string.startswith("Closed connection to server"):
                 _list.append(string)
+
         return list(_list)
 
     def remove_format_rows(self,t_list):
@@ -299,9 +300,10 @@ class CommandHandler:
         for i in result:
             print(i.get('NAME'),i.get('EXPOSED'))
 
-    def get_version_list(self,connection,command,message):
+    def get_exposed_jobs_version_list(self,connection,command,flow_list,message):
 
-        df_dictonary=self.get_dataflow_list(connection)
+
+        df_dictonary=flow_list
 
         df_list =list()
         for d in df_dictonary:
@@ -310,6 +312,7 @@ class CommandHandler:
 
         list_of_dict_objects = list()
         _inList=list()
+
         for x in df_list:
             _inList.insert(0,x)
 
@@ -318,20 +321,28 @@ class CommandHandler:
             _inList.clear()
             # print(result.get('output'))
             t_list = self.remove_empty_rows(result.get('output'))
-            name=t_list[1]
-            header=t_list[2].split('|')
-            header = self.remove_empty_elements(header)
+            # print(t_list)
 
-            i = 2
-            while i < (len(t_list) -1):
-                data =self.remove_empty_elements(t_list[i].split('|'))
-                _dict= dict(zip(header,data))
-                if _dict.get('EXPOSED').__eq__('true'):
-                    list_of_dict_objects.append(_dict)
-                    break
-                else:
-                    i +=1
-        print(list_of_dict_objects)
+            name=t_list[0]
+            if not name.__eq__("No results"):
+                header=t_list[1].split('|')
+                header = self.remove_empty_elements(header)
+                header.append("NAME")
+                i = 2
+                while i < (len(t_list) ):
+                    data =self.remove_empty_elements(t_list[i].split('|'))
+                    data.append(x)
+                    if (len(header).__eq__(len(data))):
+                        _dict= dict(zip(header,data))
+
+                        if _dict.get('EXPOSED').__eq__('true'):
+                            list_of_dict_objects.append(_dict)
+                            break
+                        else:
+                            i +=1
+                    else:
+                        print("ERROR : in version list command output")
+        # print(list_of_dict_objects)
 
 
         return list(list_of_dict_objects)
@@ -339,12 +350,14 @@ class CommandHandler:
     def check_out_list(self,connection,command,type,message,name=""):
         if str(type).__eq__('dataflow'):
             command = "dataflow version list --n "
-            v_list=self.get_version_list(connection,command,message)
-            # print(v_list)
+            df_list=self.get_flow_list(connection,"dataflow list")
+            v_list=self.get_exposed_jobs_version_list(connection,command,df_list,message)
+            print(v_list)
         elif str(type).__eq__('processflow'):
             command = "processflow version list --n "
-            v_list = self.get_version_list(connection, command, message)
-            # print(v_list)
+            pf_list = self.get_flow_list(connection, "processflow list")
+            v_list = self.get_exposed_jobs_version_list(connection, command,pf_list,message)
+            print(v_list)
 
 
 
