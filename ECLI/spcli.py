@@ -10,7 +10,7 @@ import sys
 from os import path
 import platform
 import errno
-
+import shutil
 
 class Utilities:
 
@@ -136,35 +136,44 @@ class System:
 
     def execute_cli(self, cmdfile):
         p = list()
-        if platform.system().__eq__("Windows"):
-            p = Popen((os.path.join(os.getcwd(), "cli.cmd ") + " --cmdfile {}".format(cmdfile)), stdout=PIPE,
-                      stderr=PIPE)
+        command_file=os.path.join(os.getcwd(), "tmp")
+        tgt=""
+        if os.path.exists(command_file):
+            os.remove(command_file)
+            tgt=shutil.copy2(cmdfile,os.path.join(os.getcwd(),"tmp"))
         else:
-            p = Popen([os.path.join(os.getcwd(), "cli.sh"), " --cmdfile {}".format(cmdfile)], stdout=PIPE, stderr=PIPE)
+            tgt = shutil.copy2(cmdfile, os.path.join(os.getcwd(), "tmp"))
 
-        out, err = p.communicate()
-        e_code = p.returncode
-        output = list()
-        error =list()
+        if os.path.exists(tgt):
+            cmdfile = os.path.basename(tgt)
+            if platform.system().__eq__("Windows"):
+                print(os.path.join(os.getcwd(), "cli.cmd ") + " --cmdfile {}".format(cmdfile))
+                p = Popen((os.path.join(os.getcwd(), "cli.cmd ") + " --cmdfile {}".format(cmdfile)), stdout=PIPE,
+                          stderr=PIPE)
+            else:
+                p = Popen([os.path.join(os.getcwd(), "cli.sh"), " --cmdfile {}".format(cmdfile)], stdout=PIPE, stderr=PIPE)
 
-        # print("-----------------------------------------")
-        try:
+            out, err = p.communicate()
+            e_code = p.returncode
+            output = list()
+            error =list()
+            try:
 
-            for i in out.split(b'\n'):
-                string = i.decode("utf-8")
+                for i in out.split(b'\n'):
+                    string = i.decode("utf-8")
+                    output.append(string)
+            except:
+                print("")
+            try:
+                for i in err.split(b'\n'):
+                    string = i.decode("utf-8")
+                    error.append(string)
+            except:
+                print("Error : creating err list")
 
-                output.append(string)
-        except:
-            print("")
-        try:
-            for i in err.split(b'\n'):
-                string = i.decode("utf-8")
-                error.append(string)
-        except:
-            print("Error : creating err list")
-
-        return {'output': output, 'error': error, 'exitcode': e_code}
-
+            return {'output': output, 'error': error, 'exitcode': e_code}
+        else:
+            print("ERROR : CommandFileNotFount at :" + os.getcwd())
 
 class Connection:
 
@@ -376,9 +385,11 @@ class CommandHandler:
 
     def dataflow_export(self, connection, command, fileName):
         command = "{}  --e True --o exports --d ".format(command)
-        tfile = self.utility.set_command_file(connection, command, "dataflowexport.dat",
-                                              self.utility.get_file_content(fileName))
-        result = self.run.execute_cli(tfile)
+        tfile = self.utility.set_command_file(connection, command, os.path.join(Utilities.STASH_PATH(),"dataflowexport.dat"),
+                                              self.utility.get_file_content(os.path.join(Utilities.STASH_PATH(),fileName)))
+        print(tfile)
+
+        result = self.run.execute_cli(os.path.join(os.getcwd(),tfile))
         print(result)
         return "executed dataflow export "
 
