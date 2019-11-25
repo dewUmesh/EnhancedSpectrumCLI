@@ -147,7 +147,6 @@ class System:
         if os.path.exists(tgt):
             cmdfile = os.path.basename(tgt)
             if platform.system().__eq__("Windows"):
-                print(os.path.join(os.getcwd(), "cli.cmd ") + " --cmdfile {}".format(cmdfile))
                 p = Popen((os.path.join(os.getcwd(), "cli.cmd ") + " --cmdfile {}".format(cmdfile)), stdout=PIPE,
                           stderr=PIPE)
             else:
@@ -171,6 +170,8 @@ class System:
             except:
                 print("Error : creating err list")
 
+            print(output)
+            print(error)
             return {'output': output, 'error': error, 'exitcode': e_code}
         else:
             print("ERROR : CommandFileNotFount at :" + os.getcwd())
@@ -417,6 +418,12 @@ class CommandHandler:
     def logicalmodel_import(self, connection, command, fileName):
         command = "{} --u true --i ".format(command)
         self.imports(connection,command,Utilities.LOGICALMODEL_PATH(),fileName,"lmi.out","smilm","mi_logicalModel_")
+    def physicalmodel_import(self, connection, command, fileName):
+        command = "{} --u true --i ".format(command)
+        self.imports(connection,command,Utilities.PHYSICALMODEL_PATH(),fileName,"pmi.out","smipm","mi_physicalModel_")
+    def modelstore_import(self, connection, command, fileName):
+        command = "{} --u true --i ".format(command)
+        self.imports(connection,command,Utilities.MODELSTORE_PATH(),fileName,"msi.out","smims","mi_modelStore_")
 
     def model_export(self, connection, command, fileName):
         if str(command).__eq__("logicalmodel export"):
@@ -515,6 +522,20 @@ class ArgumentHandler:
             try:
                 # self.connection.set_hostname(self.args.servername)
                 self.cmd.logicalmodel_import(self.connection.get_connection_string(self.args.env), self.args.command,
+                                         self.args.filename)
+            except:
+                print("Invalid arguments ... try help : [ {} -h ]".format(path.basename(sys.argv[0])))
+        elif str(self.args.command).__eq__("physicalmodel import"):
+            try:
+                # self.connection.set_hostname(self.args.servername)
+                self.cmd.physicalmodel_import(self.connection.get_connection_string(self.args.env), self.args.command,
+                                         self.args.filename)
+            except:
+                print("Invalid arguments ... try help : [ {} -h ]".format(path.basename(sys.argv[0])))
+        elif str(self.args.command).__eq__("modelstore import"):
+            try:
+                # self.connection.set_hostname(self.args.servername)
+                self.cmd.modelstore_import(self.connection.get_connection_string(self.args.env), self.args.command,
                                          self.args.filename)
             except:
                 print("Invalid arguments ... try help : [ {} -h ]".format(path.basename(sys.argv[0])))
