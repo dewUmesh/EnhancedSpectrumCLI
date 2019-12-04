@@ -415,6 +415,18 @@ class CommandHandler:
         command = "{} --u True --f ".format(command)
         self.imports(connection,command,Utilities.EXPORT_PATH(),fileName,"dataflowimport.out","df")
 
+    def modelstore_undeploy(self,connection,fileName):
+        command = "modelstore undeploy --n "
+        tfile = self.utility.set_command_file(connection, command, "msu.dat",
+                                              self.utility.get_file_content(fileName))
+        result = self.run.execute_cli(tfile)
+
+    def modelstore_deploy(self,connection,fileName):
+        command = "modelstore deploy --n "
+        tfile = self.utility.set_command_file(connection, command, "msd.dat",
+                                              self.utility.get_file_content(fileName))
+        result = self.run.execute_cli(tfile)
+
     def logicalmodel_import(self, connection, command, fileName):
         command = "{} --u true --i ".format(command)
         self.imports(connection,command,Utilities.LOGICALMODEL_PATH(),fileName,"lmi.out","smilm","mi_logicalModel_")
@@ -423,7 +435,9 @@ class CommandHandler:
         self.imports(connection,command,Utilities.PHYSICALMODEL_PATH(),fileName,"pmi.out","smipm","mi_physicalModel_")
     def modelstore_import(self, connection, command, fileName):
         command = "{} --u true --i ".format(command)
+        self.modelstore_undeploy(connection,fileName)
         self.imports(connection,command,Utilities.MODELSTORE_PATH(),fileName,"msi.out","smims","mi_modelStore_")
+        self.modelstore_deploy(connection,fileName)
 
     def model_export(self, connection, command, fileName):
         if str(command).__eq__("logicalmodel export"):
