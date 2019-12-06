@@ -140,10 +140,14 @@ class System:
         tgt=""
         if os.path.exists(command_file):
             os.remove(command_file)
-            tgt=shutil.copy2(cmdfile,os.path.join(os.getcwd(),"tmp"))
+            try:
+                shutil.copy2(cmdfile,os.path.join(os.getcwd(),"tmp"))
+            except Exception as e:
+                print(e)
         else:
-            tgt = shutil.copy2(cmdfile, os.path.join(os.getcwd(), "tmp"))
+            shutil.copy2(cmdfile, os.path.join(os.getcwd(), "tmp"))
 
+        tgt=os.path.join(os.getcwd(),"tmp")
         if os.path.exists(tgt):
             cmdfile = os.path.basename(tgt)
             if platform.system().__eq__("Windows"):
@@ -386,22 +390,22 @@ class CommandHandler:
 
     def dataflow_export(self, connection, command, fileName):
         command = "{}  --e True --o exports --d ".format(command)
-        # tfile = self.utility.set_command_file(connection, command, os.path.join(Utilities.STASH_PATH(),"dfe.dat"),
-        #                                       self.utility.get_file_content(os.path.join(Utilities.STASH_PATH(),fileName)))
-        # print(tfile)
-        tfile = self.utility.set_command_file(connection, command, "dfe.dat",
+        tfile = self.utility.set_command_file(connection, command, os.path.join(Utilities.STASH_PATH(),"dfe.out"),
                                               self.utility.get_file_content(fileName))
+        # print(tfile)
+        # tfile = self.utility.set_command_file(connection, command, "dfe.dat",
+        #                                       self.utility.get_file_content(fileName))
         result = self.run.execute_cli(os.path.join(os.getcwd(),tfile))
         print(result)
-        return "executed dataflow export "
+        # return "executed dataflow export "
 
     def processflow_export(self, connection, command, fileName):
         command = "{}  --o exports --n ".format(command)
-        tfile = self.utility.set_command_file(connection, command, "pfe.dat",
+        tfile = self.utility.set_command_file(connection, command, os.path.join(Utilities.STASH_PATH(),"pfe.out"),
                                               self.utility.get_file_content(fileName))
         result = self.run.execute_cli(tfile)
         print(result)
-        return "executed dataflow export "
+        # return "executed dataflow export "
 
     def imports(self,connection,command,path,fileName,outfile,postfix,prefix=""):
         dflist = self.utility.add_path(self.utility.add_job_extention(self.utility.get_file_content(fileName), postfix,prefix),
@@ -414,10 +418,10 @@ class CommandHandler:
 
     def dataflow_import(self, connection, command, fileName):
         command = "{} --u True --f ".format(command)
-        self.imports(connection,command,Utilities.EXPORT_PATH(),fileName,"dfi.out","df")
+        self.imports(connection,command,Utilities.EXPORT_PATH(),fileName,os.path.join(Utilities.STASH_PATH(),"dfi.out"),"df")
     def processflow_import(self, connection, command, fileName):
         command = "{} --u True --f ".format(command)
-        self.imports(connection,command,Utilities.EXPORT_PATH(),fileName,"pfi.out","pf")
+        self.imports(connection,command,Utilities.EXPORT_PATH(),fileName,os.path.join(Utilities.STASH_PATH(),"pfi.out"),"pf")
 
     def modelstore_undeploy(self,connection,fileName):
         command = "modelstore undeploy --n "
@@ -433,35 +437,35 @@ class CommandHandler:
 
     def logicalmodel_import(self, connection, command, fileName):
         command = "{} --u true --i ".format(command)
-        self.imports(connection,command,Utilities.LOGICALMODEL_PATH(),fileName,"lmi.out","smilm","mi_logicalModel_")
+        self.imports(connection,command,Utilities.LOGICALMODEL_PATH(),fileName,os.path.join(Utilities.STASH_PATH(),"lmi.out"),"smilm","mi_logicalModel_")
     def physicalmodel_import(self, connection, command, fileName):
         command = "{} --u true --i ".format(command)
-        self.imports(connection,command,Utilities.PHYSICALMODEL_PATH(),fileName,"pmi.out","smipm","mi_physicalModel_")
+        self.imports(connection,command,Utilities.PHYSICALMODEL_PATH(),fileName,os.path.join(Utilities.STASH_PATH(),"pmi.out"),"smipm","mi_physicalModel_")
     def modelstore_import(self, connection, command, fileName):
         command = "{} --u true --i ".format(command)
         self.modelstore_undeploy(connection,fileName)
-        self.imports(connection,command,Utilities.MODELSTORE_PATH(),fileName,"msi.out","smims","mi_modelStore_")
+        self.imports(connection,command,Utilities.MODELSTORE_PATH(),fileName,os.path.join(Utilities.STASH_PATH(),"msi.out"),"smims","mi_modelStore_")
         self.modelstore_deploy(connection,fileName)
 
     def model_export(self, connection, command, fileName):
         if str(command).__eq__("logicalmodel export"):
             # p = Utilities.create_directory('exports/logicalmodel')
             command = "{} --o '{}' --d true --n ".format(command, Utilities.LOGICALMODEL_PATH())
-            tfile = self.utility.set_command_file(connection, command, "lm.dat",
+            tfile = self.utility.set_command_file(connection, command, os.path.join(Utilities.STASH_PATH(),"lme.out"),
                                                   self.utility.get_file_content(fileName))
             result = self.run.execute_cli(tfile)
             print(result)
         elif str(command).__eq__("modelstore export"):
             # p = Utilities.create_directory('exports/modelstore')
             command = "{} --o '{}' --d true --n ".format(command, Utilities.MODELSTORE_PATH())
-            tfile = self.utility.set_command_file(connection, command, "ms.dat",
+            tfile = self.utility.set_command_file(connection, command, os.path.join(Utilities.STASH_PATH(),"mse.out"),
                                                   self.utility.get_file_content(fileName))
             result = self.run.execute_cli(tfile)
             print(result)
         elif str(command).__eq__("physicalmodel export"):
             # p = Utilities.create_directory('exports/physicalmodel')
             command = "{} --o '{}' --n ".format(command, Utilities.PHYSICALMODEL_PATH())
-            tfile = self.utility.set_command_file(connection, command, "pm.dat",
+            tfile = self.utility.set_command_file(connection, command, os.path.join(Utilities.STASH_PATH(),"pme.out"),
                                                   self.utility.get_file_content(fileName))
             result = self.run.execute_cli(tfile)
             print(result)
@@ -631,11 +635,11 @@ def main():
     if arg_exist == 0:
         print("""
             Note    :Must set environment before running any command
-            Example :spcli.py -setenv=y -e dev -s localhost -p 9090 -u admin -pw admin
-            Usage   :spcli.py -e "environment" -c "command"
-            Example :spcli.py -e dev -c "dataflow list"
-            For help type:  spcli.py -h
-            """)
+            Example :{0} -setenv=y -e dev -s localhost -p 9090 -u admin -pw admin
+            Usage   :{0} -e "environment" -c "command"
+            Example :{0} -e dev -c "dataflow list"
+            For help type:  {0} -h
+            """.format(path.basename(sys.argv[0])))
         exit(1)
     if str(args.setenv).__eq__("y"):
         print("Set environment ")
