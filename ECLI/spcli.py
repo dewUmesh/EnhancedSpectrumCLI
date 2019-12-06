@@ -386,17 +386,18 @@ class CommandHandler:
 
     def dataflow_export(self, connection, command, fileName):
         command = "{}  --e True --o exports --d ".format(command)
-        tfile = self.utility.set_command_file(connection, command, os.path.join(Utilities.STASH_PATH(),"dataflowexport.dat"),
-                                              self.utility.get_file_content(os.path.join(Utilities.STASH_PATH(),fileName)))
-        print(tfile)
-
+        # tfile = self.utility.set_command_file(connection, command, os.path.join(Utilities.STASH_PATH(),"dfe.dat"),
+        #                                       self.utility.get_file_content(os.path.join(Utilities.STASH_PATH(),fileName)))
+        # print(tfile)
+        tfile = self.utility.set_command_file(connection, command, "dfe.dat",
+                                              self.utility.get_file_content(fileName))
         result = self.run.execute_cli(os.path.join(os.getcwd(),tfile))
         print(result)
         return "executed dataflow export "
 
     def processflow_export(self, connection, command, fileName):
-        command = "{}  --e True --o exports --d ".format(command)
-        tfile = self.utility.set_command_file(connection, command, "processflowexport.dat",
+        command = "{}  --o exports --n ".format(command)
+        tfile = self.utility.set_command_file(connection, command, "pfe.dat",
                                               self.utility.get_file_content(fileName))
         result = self.run.execute_cli(tfile)
         print(result)
@@ -413,7 +414,10 @@ class CommandHandler:
 
     def dataflow_import(self, connection, command, fileName):
         command = "{} --u True --f ".format(command)
-        self.imports(connection,command,Utilities.EXPORT_PATH(),fileName,"dataflowimport.out","df")
+        self.imports(connection,command,Utilities.EXPORT_PATH(),fileName,"dfi.out","df")
+    def processflow_import(self, connection, command, fileName):
+        command = "{} --u True --f ".format(command)
+        self.imports(connection,command,Utilities.EXPORT_PATH(),fileName,"pfi.out","pf")
 
     def modelstore_undeploy(self,connection,fileName):
         command = "modelstore undeploy --n "
@@ -492,11 +496,26 @@ class ArgumentHandler:
                                          self.args.filename)
             except:
                 print("Invalid arguments ... try help : [ {} -h ]".format(path.basename(sys.argv[0])))
+        elif str(self.args.command).__eq__("processflow export"):
+            try:
+                # self.connection.set_hostname(self.args.servername)
+                self.cmd.processflow_export(self.connection.get_connection_string(self.args.env), self.args.command,
+                                         self.args.filename)
+            except:
+                print("Invalid arguments ... try help : [ {} -h ]".format(path.basename(sys.argv[0])))
 
         elif str(self.args.command).__eq__("dataflow import"):
             try:
                 # self.connection.set_hostname(self.args.servername)
                 self.cmd.dataflow_import(self.connection.get_connection_string(self.args.env), self.args.command,
+                                         self.args.filename)
+            except:
+                print("Invalid arguments ... try help : [ {} -h ]".format(path.basename(sys.argv[0])))
+
+        elif str(self.args.command).__eq__("processflow import"):
+            try:
+                # self.connection.set_hostname(self.args.servername)
+                self.cmd.processflow_import(self.connection.get_connection_string(self.args.env), self.args.command,
                                          self.args.filename)
             except:
                 print("Invalid arguments ... try help : [ {} -h ]".format(path.basename(sys.argv[0])))
