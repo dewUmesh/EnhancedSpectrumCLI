@@ -11,7 +11,11 @@ from os import path
 import platform
 import errno
 import shutil
+import traceback
+import logging
+import datetime
 
+logging.basicConfig(filename='ecli.log',format='%(levelname)s\t:%(asctime)s :%(message)s',datefmt='%Y-%m-%d %I:%M:%S %p',level=logging.DEBUG)
 class Utilities:
 
     def __init__(self):
@@ -44,7 +48,7 @@ class Utilities:
     @staticmethod
     def read_from_file(fname):
         with open(fname ,"r") as f:
-            string =f.readline()
+            string = f.readline()
             f.close()
         return string
 
@@ -56,9 +60,23 @@ class Utilities:
         :return:
         """
         content = list()
-        with open(fname) as f:
-            content = f.readlines()
-        return content
+        assert fname is not None
+        # try:
+        #     assert fname is not None
+        # except Exception as e:
+        #     print(traceback.print_exc())
+        #     logging.exception(e)
+        #     exit(1)
+
+        try :
+            with open(fname) as f:
+                content = f.readlines()
+        except Exception as e:
+            print(traceback.print_exc())
+            logging.exception(e)
+            exit(1)
+        else:
+            return content
 
     def get_command_statements(self, command, arraylist):
 
@@ -84,6 +102,9 @@ class Utilities:
         """
 
         outfile = fileName
+
+        assert outfile is not None
+
         with open(outfile, "w") as f:
             f.write(connection + '\n')
             for e in self.get_command_statements(command, arraylist):
@@ -138,44 +159,44 @@ class System:
         p = list()
         command_file=os.path.join(os.getcwd(), "tmp")
         tgt=""
-        if os.path.exists(command_file):
-            os.remove(command_file)
-            try:
+        try:
+            if os.path.exists(command_file):
+                os.remove(command_file)
                 shutil.copy2(cmdfile,os.path.join(os.getcwd(),"tmp"))
-            except Exception as e:
-                print(e)
-        else:
-            shutil.copy2(cmdfile, os.path.join(os.getcwd(), "tmp"))
+
+            else:
+                shutil.copy2(cmdfile, os.path.join(os.getcwd(), "tmp"))
+
+        except Exception as e:
+            print(traceback.print_exc())
 
         tgt=os.path.join(os.getcwd(),"tmp")
         if os.path.exists(tgt):
             cmdfile = os.path.basename(tgt)
-            if platform.system().__eq__("Windows"):
-                p = Popen((os.path.join(os.getcwd(), "cli.cmd ") + " --cmdfile {}".format(cmdfile)), stdout=PIPE,
-                          stderr=PIPE)
-            else:
-                p = Popen([os.path.join(os.getcwd(), "cli.sh"), " --cmdfile {}".format(cmdfile)], stdout=PIPE, stderr=PIPE)
-
-            out, err = p.communicate()
-            e_code = p.returncode
-            output = list()
-            error =list()
             try:
+                if platform.system().__eq__("Windows"):
+                    p = Popen((os.path.join(os.getcwd(), "cli.cmd ") + " --cmdfile {}".format(cmdfile)), stdout=PIPE,
+                              stderr=PIPE)
+                else:
+                    p = Popen([os.path.join(os.getcwd(), "cli.sh"), " --cmdfile {}".format(cmdfile)], stdout=PIPE, stderr=PIPE)
+
+                out, err = p.communicate()
+                e_code = p.returncode
+                output = list()
+                error =list()
 
                 for i in out.split(b'\n'):
                     string = i.decode("utf-8")
                     output.append(string)
-            except:
-                print("")
-            try:
+
                 for i in err.split(b'\n'):
                     string = i.decode("utf-8")
                     error.append(string)
-            except:
-                print("Error : creating err list")
+            except Exception as e:
+                print(traceback.print_exc())
 
-            print(output)
-            print(error)
+            # print(output)
+            # print(error)
             return {'output': output, 'error': error, 'exitcode': e_code}
         else:
             print("ERROR : CommandFileNotFount at :" + os.getcwd())
@@ -274,6 +295,23 @@ class CommandHandler:
                 tmp_list.remove(i)
 
         return list(tmp_list)
+
+    def get_display(self,result):
+        output=(result.get('output'))
+
+        for i in self.remove_empty_elements(output):
+            logging.info(i)
+            print("INFO : ", i)
+        error=result.get('error')
+        l_error= self.remove_empty_elements(error)
+        for i in l_error:
+            logging.error(i)
+            print("ERROR : ",i)
+        try:
+            assert len(l_error)== 0
+        except:
+            print("Error : Check log for more info")
+            exit(1)
 
     def remove_connection_strings(self, _list):
         for i in _list:
@@ -392,29 +430,23 @@ class CommandHandler:
         command = "{}  --e True --o exports --d ".format(command)
         tfile = self.utility.set_command_file(connection, command, os.path.join(Utilities.STASH_PATH(),"dfe.out"),
                                               self.utility.get_file_content(fileName))
-        # print(tfile)
-        # tfile = self.utility.set_command_file(connection, command, "dfe.dat",
-        #                                       self.utility.get_file_content(fileName))
         result = self.run.execute_cli(os.path.join(os.getcwd(),tfile))
-        print(result)
-        # return "executed dataflow export "
+        self.get_display(result)
 
     def processflow_export(self, connection, command, fileName):
         command = "{}  --o exports --n ".format(command)
         tfile = self.utility.set_command_file(connection, command, os.path.join(Utilities.STASH_PATH(),"pfe.out"),
                                               self.utility.get_file_content(fileName))
         result = self.run.execute_cli(tfile)
-        print(result)
-        # return "executed dataflow export "
+        self.get_display(result)
 
     def imports(self,connection,command,path,fileName,outfile,postfix,prefix=""):
         dflist = self.utility.add_path(self.utility.add_job_extention(self.utility.get_file_content(fileName), postfix,prefix),
                                        path)
         tfile = self.utility.set_command_file(connection, command, outfile, dflist)
-        print(tfile)
+
         result=self.run.execute_cli(tfile)
-        print(result)
-        # write logic for handling errors
+        self.get_display(result)
 
     def dataflow_import(self, connection, command, fileName):
         command = "{} --u True --f ".format(command)
@@ -428,12 +460,14 @@ class CommandHandler:
         tfile = self.utility.set_command_file(connection, command, "msu.dat",
                                               self.utility.get_file_content(fileName))
         result = self.run.execute_cli(tfile)
+        self.get_display(result)
 
     def modelstore_deploy(self,connection,fileName):
         command = "modelstore deploy --n "
         tfile = self.utility.set_command_file(connection, command, "msd.dat",
                                               self.utility.get_file_content(fileName))
         result = self.run.execute_cli(tfile)
+        self.get_display(result)
 
     def logicalmodel_import(self, connection, command, fileName):
         command = "{} --u true --i ".format(command)
@@ -461,14 +495,14 @@ class CommandHandler:
             tfile = self.utility.set_command_file(connection, command, os.path.join(Utilities.STASH_PATH(),"mse.out"),
                                                   self.utility.get_file_content(fileName))
             result = self.run.execute_cli(tfile)
-            print(result)
+            self.get_display(result)
         elif str(command).__eq__("physicalmodel export"):
             # p = Utilities.create_directory('exports/physicalmodel')
             command = "{} --o '{}' --n ".format(command, Utilities.PHYSICALMODEL_PATH())
             tfile = self.utility.set_command_file(connection, command, os.path.join(Utilities.STASH_PATH(),"pme.out"),
                                                   self.utility.get_file_content(fileName))
             result = self.run.execute_cli(tfile)
-            print(result)
+            self.get_display(result)
     def help(self):
         command = "help"
 
@@ -495,11 +529,13 @@ class ArgumentHandler:
 
         elif str(self.args.command).__eq__("dataflow export"):
             try:
-                # self.connection.set_hostname(self.args.servername)
+                logging.info(self.args)
                 self.cmd.dataflow_export(self.connection.get_connection_string(self.args.env), self.args.command,
                                          self.args.filename)
-            except:
+            except Exception as e:
                 print("Invalid arguments ... try help : [ {} -h ]".format(path.basename(sys.argv[0])))
+                logging.exception(e)
+
         elif str(self.args.command).__eq__("processflow export"):
             try:
                 # self.connection.set_hostname(self.args.servername)
@@ -635,7 +671,7 @@ def main():
     if arg_exist == 0:
         print("""
             Note    :Must set environment before running any command
-            Example :{0} -setenv=y -e dev -s localhost -p 9090 -u admin -pw admin
+            Example :{0} -setenv=y -e dev -s localhost -p 8080 -u admin -pw admin
             Usage   :{0} -e "environment" -c "command"
             Example :{0} -e dev -c "dataflow list"
             For help type:  {0} -h
