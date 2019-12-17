@@ -6,14 +6,14 @@ def test():
     try:
             with open(file="") as f:
                 f.readline()
-    except Exception as e:
+    except IOError as e:
+            print(e)
             print(traceback.print_exc())
 
     else:
             f.close()
             print("in else")
-    finally:
-            print("in final clause")
+
 
 
 def main():

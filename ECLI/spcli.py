@@ -40,27 +40,38 @@ class Utilities:
 
     @staticmethod
     def write_to_file(fname ,string):
-        print(string)
-        with open(fname ,"w") as f:
-            f.write(string)
+        try:
+            with open(file=fname ,mode="w") as f:
+                f.write(string)
+        except IOError as e:
+            print(e)
+            logging.exception(e)
+        else:
             f.close()
 
     @staticmethod
     def read_from_file(fname):
-        with open(fname ,"r") as f:
-            string = f.readline()
+        try :
+            assert fname is not None
+            with open(file=fname ,mode="r") as f:
+                content = f.readline()
+        except IOError as e:
+            print(e)
+            logging.exception(e)
+        else:
             f.close()
-        return string
+            return content
 
     def get_file_content(self, fname):
         """
         Read file content and return a list
 
         :param fname:
-        :return:
+        :return: file content blob
         """
         content = list()
-        assert fname is not None
+        #assert fname is not None
+        return self.read_from_file(fname)
         # try:
         #     assert fname is not None
         # except Exception as e:
@@ -68,15 +79,15 @@ class Utilities:
         #     logging.exception(e)
         #     exit(1)
 
-        try :
-            with open(fname) as f:
-                content = f.readlines()
-        except Exception as e:
-            print(traceback.print_exc())
-            logging.exception(e)
-            exit(1)
-        else:
-            return content
+        # try :
+        #     with open(fname) as f:
+        #         content = f.readlines()
+        # except Exception as e:
+        #     print(traceback.print_exc())
+        #     logging.exception(e)
+        #     exit(1)
+        # else:
+        #     return content
 
     def get_command_statements(self, command, arraylist):
 
